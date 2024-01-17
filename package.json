@@ -1,0 +1,79 @@
+{
+  "name": "bird-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack serve --config ./build/webpack.example.js",
+    "prepare": "husky install",
+    "clean": "rimraf dist",
+    "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0  -n ./changelog-option.js",
+    "lint": "eslint src/**/* packages/**/* build/**/* examples/**/* --quiet --no-error-on-unmatched-pattern",
+    "build:dev": "npx webpack --config ./build/webpack.config.js"
+  },
+  "author": "可以清心 (https://blog.keyiqingxin.cn/)",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@vue/compiler-sfc": "^2.7.16",
+    "babel-loader": "^9.1.3",
+    "colors": "^1.4.0",
+    "commitlint": "^18.4.4",
+    "compare-func": "^2.0.0",
+    "conventional-changelog": "^5.1.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
+    "conventional-changelog-custom-config": "^0.3.1",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.9.0",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "eslint": "^7.32.0",
+    "eslint-loader": "^4.0.2",
+    "html-webpack-plugin": "^5.6.0",
+    "husky": "^8.0.3",
+    "i": "^0.3.7",
+    "less": "^4.2.0",
+    "less-loader": "^11.1.4",
+    "lint-staged": "^15.2.0",
+    "markdown-it": "^14.0.0",
+    "markdown-it-shikiji": "^0.10.0-beta.4",
+    "mini-css-extract-plugin": "^2.7.7",
+    "npm": "^10.3.0",
+    "postcss": "^8.4.33",
+    "postcss-html": "^1.6.0",
+    "postcss-less": "^6.0.0",
+    "postcss-loader": "^7.3.4",
+    "postcss-preset-env": "^9.3.0",
+    "prettier": "^3.2.3",
+    "rimraf": "^5.0.5",
+    "shikiji": "^0.10.0-beta.4",
+    "style-loader": "^3.3.4",
+    "style-resources-loader": "^1.5.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-config-standard-vue": "^1.0.0",
+    "stylelint-less": "^3.0.1",
+    "stylelint-order": "^6.0.4",
+    "thread-loader": "^4.0.2",
+    "vue-eslint-parser": "^9.4.0",
+    "vue-loader": "^15.11.1",
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{vue}": [
+      "prettier --write",
+      "eslint --parser vue-eslint-parser --fix"
+    ],
+    "*.{css,less,vue}": [
+      "prettier --write",
+      "stylelint --fix"
+    ]
+  }
+}

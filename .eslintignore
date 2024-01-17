@@ -1,0 +1,9 @@
+*.sh
+node_modules
+lib
+*.md
+*.less
+*.woff
+*.ttf
+*.css
+src/assets/**/*
