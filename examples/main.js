@@ -2,13 +2,13 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-12 18:52:22
- * @LastEditTime: 2024-01-31 20:07:38
+ * @LastEditTime: 2024-01-31 20:33:29
  */
 import Vue from "vue";
 import App from "./App";
 import router from "./src/router";
 import Snippet from "./src/components/Snippet.vue";
-import NavBar from "./src/components/NavBar.vue";
+import NavBar from "./src/components/Navbar.vue";
 
 // ----
 import "../packages/styles/theme.less";
