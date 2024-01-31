@@ -1,6 +1,4 @@
 name: Deploy vercel
-
-# 触发条件：在 push 到 master 分支后
 on:
   push:
     branches:
@@ -8,7 +6,6 @@ on:
   pull_request:
     branches:
       - master
-
 # 任务
 jobs:
   build-and-deploy:
@@ -26,9 +23,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci && npm run build:dev
-      # 部署到vercel
-      - run: npx vercel --token ${VERCEL_TOKEN} --prod
-        env:
+      # 2、部署到 vercel
+      - name: Deploy
+        run: npx vercel --token ${VERCEL_TOKEN} --prod
+        env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
