@@ -28,9 +28,9 @@ jobs:
       - run: npm ci && npm run build:dev
 
       # 2、部署到 vercel
-#       - name: Deploy
-#         run: npx vercel --token ${VERCEL_TOKEN} --prod
-#         env:
-#           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-#           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-#           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      - name: Deploy
+        run: npx vercel --token ${VERCEL_TOKEN} --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
