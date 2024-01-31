@@ -21,6 +21,7 @@ jobs:
       # 1、生成静态文件
       - uses: actions/checkout@v2
       - name: Build
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
