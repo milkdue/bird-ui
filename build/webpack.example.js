@@ -2,24 +2,26 @@
  * @Author: 可以清心
  * @Description: webpack docs 配置文件
  * @Date: 2024-01-15 13:47:27
- * @LastEditTime: 2024-01-17 15:14:09
+ * @LastEditTime: 2024-01-31 14:56:24
  */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const { DefinePlugin } = require("webpack");
-// const MarkdownWebpackPlugin = require("./plugins/markdown.webpack.plugin");
 
-module.exports = {
+const isProd = process.env.NODE_ENV === "production";
+
+const webpackBaseConfig = {
     entry: path.resolve(__dirname, "../examples/main.js"),
     output: {
         path: path.resolve(process.cwd(), "./docs"),
-        filename: "[name][contenthash:10].js",
-        chunkFilename: "[id].js",
-        assetModuleFilename: "[name][contenthash:10][ext][query]",
+        filename: "[name].[contenthash:10].js",
+        chunkFilename: "chunk.[id].js",
+        assetModuleFilename: "[name].[contenthash:10][ext][query]",
         libraryExport: "default",
         library: "BIRD",
         libraryTarget: "commonjs2"
@@ -45,6 +47,10 @@ module.exports = {
                                 path.resolve(
                                     __dirname,
                                     "../examples/src/assets/less/theme-variable.less"
+                                ),
+                                path.resolve(
+                                    __dirname,
+                                    "../packages/index.less"
                                 )
                             ]
                         }
@@ -106,14 +112,21 @@ module.exports = {
         ]
     },
     plugins: [
-        // new MarkdownWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "../examples/index.tpl"),
             filename: path.resolve(__dirname, "../docs/index.html"),
             favicon: path.resolve(__dirname, "../examples/favicon.ico")
         }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, "../examples/vercel.json"),
+                    to: path.resolve(__dirname, "../docs")
+                }
+            ]
+        }),
         new MiniCssExtractPlugin({
-            filename: "[name].[contenthash:10].css"
+            filename: "css.[name].[contenthash:10].css"
         }),
         new VueLoaderPlugin(),
         new DefinePlugin({
@@ -144,13 +157,20 @@ module.exports = {
             )
         }
     },
-    mode: process.env.NODE_ENV,
+    mode: process.env.NODE_ENV
+};
+
+const webpackDevConfig = {
     devServer: {
         host: "localhost",
         static: "./docs",
-        port: 8085,
+        port: 8080,
         hot: true,
         historyApiFallback: true
     },
     devtool: "source-map"
 };
+
+module.exports = isProd
+    ? webpackBaseConfig
+    : Object.assign(webpackBaseConfig, webpackDevConfig);

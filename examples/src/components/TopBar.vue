@@ -1,3 +1,9 @@
+<!--
+ * @Author: 可以清心
+ * @Description:
+ * @Date: 2024-01-17 16:59:05
+ * @LastEditTime: 2024-01-31 13:09:07
+-->
 <template>
     <div class="top-bar">
         <router-link class="logo" to="/">
@@ -27,8 +33,9 @@ export default {
     data() {
         return {
             navLinks: {
+                "/": "首页",
                 "/develop": "开发",
-                "/design": "设计",
+                // "/design": "设计",
                 "/module": "组件"
             },
             links: {

@@ -75,7 +75,6 @@ export default {
         };
     },
     created() {
-        console.log(this.title, "title");
         const shiki = getHighlighter({
             themes: ["vitesse-light", "vitesse-dark"],
             langs: ["vue"]
@@ -154,6 +153,9 @@ export default {
                     background-color: rgb(30 32 37);
                     &:hover {
                         background-color: rgb(30 32 37);
+                    }
+                    .svg-icon {
+                        color: #fff;
                     }
                 }
             }

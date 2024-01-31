@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --config ./build/webpack.example.js",
     "prepare": "husky install",
-    "clean": "rimraf dist",
+    "clean": "rimraf node_modules",
     "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0  -n ./changelog-option.js",
     "lint": "eslint src/**/* packages/**/* build/**/* examples/**/* --quiet --no-error-on-unmatched-pattern",
-    "build:dev": "npx webpack --config ./build/webpack.config.js"
+    "build:dev": "rimraf docs && cross-env NODE_ENV=production npx webpack --config ./build/webpack.example.js"
   },
   "author": "可以清心 (https://blog.keyiqingxin.cn/)",
   "license": "MIT",
@@ -25,6 +25,7 @@
     "conventional-changelog-cli": "^4.1.0",
     "conventional-changelog-conventionalcommits": "^7.0.2",
     "conventional-changelog-custom-config": "^0.3.1",
+    "copy-webpack-plugin": "^12.0.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.9.0",
     "css-minimizer-webpack-plugin": "^5.0.1",
@@ -75,5 +76,8 @@
       "prettier --write",
       "stylelint --fix"
     ]
+  },
+  "dependencies": {
+    "vue": "^2.6.14"
   }
 }
