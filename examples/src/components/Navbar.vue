@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-23 17:03:22
- * @LastEditTime: 2024-01-24 14:55:41
+ * @LastEditTime: 2024-01-31 20:04:23
 -->
 <template>
     <div class="nav-bar">
@@ -73,7 +73,7 @@ export default {
             transition: background-color 0.2s;
             line-height: 40px;
             &:hover {
-                background-color: rgb(rgb(@gray) 0.08);
+                background-color: rgb(@gray 0.08);
             }
             &:last-child {
                 margin-bottom: unset;

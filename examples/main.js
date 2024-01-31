@@ -2,20 +2,20 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-12 18:52:22
- * @LastEditTime: 2024-01-25 17:32:51
+ * @LastEditTime: 2024-01-31 20:07:38
  */
 import Vue from "vue";
 import App from "./App";
 import router from "./src/router";
-import Snippet from "@/components/Snippet.vue";
-import NavBar from "@/components/NavBar.vue";
+import Snippet from "./src/components/Snippet.vue";
+import NavBar from "./src/components/NavBar.vue";
 
 // ----
 import "../packages/styles/theme.less";
 import BirdUI from "../packages";
 // ----
 
-import "@/assets/less/theme-variable.less";
+import "./src/assets/less/theme-variable.less";
 import "normalize.css";
 
 Vue.component("bird-snippet", Snippet);
