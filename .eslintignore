@@ -7,4 +7,4 @@ lib
 *.ttf
 *.css
 src/assets/**/*
-docs/*
+docs

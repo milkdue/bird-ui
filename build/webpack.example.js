@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: webpack docs 配置文件
  * @Date: 2024-01-15 13:47:27
- * @LastEditTime: 2024-01-31 14:56:24
+ * @LastEditTime: 2024-01-31 19:07:18
  */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -120,7 +120,7 @@ const webpackBaseConfig = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, "../examples/vercel.json"),
+                    from: path.resolve(__dirname, "../vercel.json"),
                     to: path.resolve(__dirname, "../docs")
                 }
             ]
