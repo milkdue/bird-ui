@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-17 16:59:05
- * @LastEditTime: 2024-01-31 19:57:29
+ * @LastEditTime: 2024-01-31 20:11:59
 -->
 <template>
     <div class="top-bar">
@@ -60,7 +60,7 @@ export default {
         padding: 0 24px;
         width: 100%;
         height: @top-bar-height;
-        border-bottom: 1px solid rgb(@gray 0.08);
+        border-bottom: 1px solid rgb(30 32 37 / 8%);
         background-color: #fff;
         transition: all 0.3s;
         a {

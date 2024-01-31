@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-23 17:03:22
- * @LastEditTime: 2024-01-31 20:04:23
+ * @LastEditTime: 2024-01-31 20:10:32
 -->
 <template>
     <div class="nav-bar">
@@ -43,7 +43,7 @@ export default {
         z-index: 1;
         width: @nav-bar-width;
         height: calc(100vh - @top-bar-height);
-        border-right: 1px solid rgb(@gray 0.08);
+        border-right: 1px solid rgb(30 32 37 / 8%);
         background-color: @background;
         transition: background-color @animats;
         box-sizing: border-box;
@@ -69,11 +69,11 @@ export default {
             height: 40px;
             border-radius: 8px;
             text-decoration: none;
-            color: rgb(@gray 0.72);
+            color: rgb(30 32 37 / 72%);
             transition: background-color 0.2s;
             line-height: 40px;
             &:hover {
-                background-color: rgb(@gray 0.08);
+                background-color: rgb(30 32 37 / 8%);
             }
             &:last-child {
                 margin-bottom: unset;
@@ -81,7 +81,7 @@ export default {
             &.router-link-active {
                 font-weight: bold;
                 color: rgb(@primary-color);
-                background-color: rgb(@primary-color 0.08);
+                background-color: rgb(43 90 237 / 8%);
             }
         }
     }
