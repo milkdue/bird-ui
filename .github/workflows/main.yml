@@ -19,12 +19,13 @@ jobs:
         node-version: [ 20.x ]
     steps:
       # 1、生成静态文件
+      - uses: actions/checkout@v2
       - name: Build
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
         run: npm install && npm run build:dev
-        
+
       # 2、部署到 vercel
 #       - name: Deploy
 #         run: npx vercel --token ${VERCEL_TOKEN} --prod
