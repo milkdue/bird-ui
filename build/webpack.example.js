@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: webpack docs 配置文件
  * @Date: 2024-01-15 13:47:27
- * @LastEditTime: 2024-02-01 09:38:44
+ * @LastEditTime: 2024-02-01 10:11:58
  */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -24,8 +24,8 @@ const webpackBaseConfig = {
         chunkFilename: "chunk.[id].js",
         assetModuleFilename: "[name].[contenthash:10][ext][query]",
         libraryExport: "default",
-        library: "BIRD",
-        libraryTarget: "commonjs2"
+        // library: "BIRD", // libray 和 librayTarget 不能一起使用  see: https://github.com/webpack/webpack/issues/11800
+        libraryTarget: "umd"
     },
     module: {
         rules: [
