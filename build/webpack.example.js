@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: webpack docs 配置文件
  * @Date: 2024-01-15 13:47:27
- * @LastEditTime: 2024-01-31 19:07:18
+ * @LastEditTime: 2024-02-01 09:38:44
  */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -19,6 +19,7 @@ const webpackBaseConfig = {
     entry: path.resolve(__dirname, "../examples/main.js"),
     output: {
         path: path.resolve(process.cwd(), "./docs"),
+        publicPath: "/",
         filename: "[name].[contenthash:10].js",
         chunkFilename: "chunk.[id].js",
         assetModuleFilename: "[name].[contenthash:10][ext][query]",
