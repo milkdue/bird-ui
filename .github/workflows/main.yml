@@ -1,4 +1,4 @@
-name: Deploy vercel
+name: Deploy To Vercel
 on:
   push:
     branches:
@@ -6,28 +6,24 @@ on:
   pull_request:
     branches:
       - master
-# 任务
 jobs:
   build-and-deploy:
-    # 服务器环境：最新版 Ubuntu
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 20.11.0 ]
     steps:
-      # 1、生成静态文件
-      - uses: actions/checkout@v2
-      - name: Build
-        uses: actions/setup-node@v2
+      - name: Check
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci && npm run build:dev
-      # 2、部署到 vercel
+          node-version: 20.11.0
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build:dev
       - name: Deploy
         run: npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-
