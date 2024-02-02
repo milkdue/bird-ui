@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-12 18:52:22
- * @LastEditTime: 2024-01-31 20:33:29
+ * @LastEditTime: 2024-02-02 16:34:44
  */
 import Vue from "vue";
 import App from "./App";
@@ -12,6 +12,7 @@ import NavBar from "./src/components/Navbar.vue";
 
 // ----
 import "../packages/styles/theme.less";
+import "./src/assets/less/format.less";
 import BirdUI from "../packages";
 // ----
 

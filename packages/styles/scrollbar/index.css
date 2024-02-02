@@ -1,0 +1,57 @@
+.bird-scrollbar {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    box-sizing: border-box;
+}
+.bird-scrollbar__wrap {
+    overflow: auto;
+    height: 100%;
+}
+.bird-scrollbar__wrap.bird-scrollbar__wrap--default-hide {
+    scrollbar-width: none;
+}
+.bird-scrollbar__wrap.bird-scrollbar__wrap--default-hide::-webkit-scrollbar {
+    display: none;
+}
+.bird-scrollbar__bar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    border-radius: 4px;
+}
+.bird-scrollbar__bar.bird-scrollbar__bar--vertical {
+    top: 0;
+    width: 5px;
+}
+.bird-scrollbar__bar.bird-scrollbar__bar--vertical > div {
+    width: 100%;
+}
+.bird-scrollbar__bar.bird-scrollbar__bar--horizontal {
+    left: 0;
+    height: 5px;
+}
+.bird-scrollbar__bar.bird-scrollbar__bar--horizontal > div {
+    height: 100%;
+}
+.bird-scrollbar__thumb {
+    position: relative;
+    width: 0;
+    height: 0;
+    border-radius: inherit;
+    background-color: color-mix(in srgb, #fff, #1e2025 20%);
+    cursor: pointer;
+}
+.bird-scrollbar__thumb:hover,
+.bird-scrollbar__thumb:active {
+    background-color: color-mix(in srgb, #fff, #1e2025 40%);
+}
+.bird-scrollbar .bird-fade-in-enter-active,
+.bird-scrollbar .bird-fade-in-leave-active {
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.bird-scrollbar .bird-fade-in-enter,
+.bird-scrollbar .bird-fade-in-leave-active {
+    opacity: 0;
+}

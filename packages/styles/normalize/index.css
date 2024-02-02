@@ -6,7 +6,6 @@
     font-weight: normal;
     box-sizing: border-box;
 }
-
 body {
     min-height: 100vh;
     font-size: 14px;
@@ -23,9 +22,6 @@ body {
         "Droid Sans",
         "Helvetica Neue",
         sans-serif;
-    // color: @font-color-l;
-    // background: @bg-color-l;
-    // transition: color @animats, background-color @animats;
     line-height: 20px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

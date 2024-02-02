@@ -2,23 +2,30 @@
  * @Author: 可以清心
  * @Description: 自定义处理 .md 文件的loader
  * @Date: 2024-01-16 14:05:43
- * @LastEditTime: 2024-01-31 13:50:47
+ * @LastEditTime: 2024-02-02 17:06:37
  */
 const fs = require("fs");
 const MarkdownIt = require("markdown-it");
 const { handleMatch } = require("../utils/match.util");
 const { walkSync } = require("../utils/dir.util");
+const {
+    markdownCustomTitle,
+    markdownCustomTable
+} = require("../plugins/markdown.plugin");
 
 const markdownIt = MarkdownIt({
     html: true,
     xhtmlOut: false
 });
 
+markdownIt.use(markdownCustomTitle);
+markdownIt.use(markdownCustomTable);
+
 module.exports = function markdownLoader(markdownContent) {
     const options = this.getOptions();
     markdownContent = markdownIt.render(markdownContent);
     const snippetReg =
-        /(?<q>:{3})(?<flag>demo)\s+(?<content>[\s\S]+?)\s+\k<q>/g;
+        /(?<q>:{3})(?<flag>demo|default)\s+(?<content>[\s\S]+?)\s+\k<q>/g;
     const matches = markdownContent.matchAll(snippetReg);
 
     let importScripts = [];
@@ -64,6 +71,40 @@ module.exports = function markdownLoader(markdownContent) {
                         ${demoName}
                     </template>
                 </bird-snippet>
+                `
+            );
+        }
+
+        if (flag === "default") {
+            const tagReg = /<([a-zA-Z-]+)\s*\/?>/g;
+            const tagList = content.match(tagReg);
+
+            tagList &&
+                tagList.forEach(tag => {
+                    const reg = /<([a-zA-Z-]+)\s*\/?>/;
+                    let kababCaseName = tag.match(reg)[1];
+                    let pascalCase = kababCaseName
+                        .split("-")
+                        .map(
+                            name =>
+                                name.charAt(0).toUpperCase() + name.substring(1)
+                        )
+                        .join("");
+
+                    if (!componentNames.includes(pascalCase)) {
+                        importScripts.push(
+                            `import ${pascalCase} from "./${kababCaseName}.vue"`
+                        );
+                        componentNames.push(pascalCase);
+                    }
+                });
+
+            markdownContent = markdownContent.replace(
+                new RegExp(`<p>\s*${match[0]}\s*</p>`),
+                `
+                    <div class="default-content">
+                        ${content}
+                    </div>
                 `
             );
         }

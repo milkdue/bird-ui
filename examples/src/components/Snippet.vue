@@ -98,16 +98,6 @@ export default {
 
 <style lang="less">
     .snippet-wrapper {
-        h3.snippet-title {
-            font-size: 24px;
-            line-height: 1.34;
-        }
-        .snippet-title {
-            margin-top: 1em;
-            margin-bottom: 0.5em;
-            font-weight: 600;
-            color: #1e2025;
-        }
         .demo-block {
             margin: 12px 0 8px;
             padding: 20px;
@@ -168,18 +158,6 @@ export default {
         }
         .shiki {
             background-color: color-mix(in srgb, #fff, #1e2025 3.6%) !important;
-        }
-        p > code {
-            margin: 0 1px;
-            padding: 3px 6px;
-            font-family: "IBM Plex Mono", Consolas, "Andale Mono WT",
-                "Andale Mono", "Lucida Console", "Lucida Sans Typewriter",
-                "DejaVu Sans Mono", "Bitstream Vera Sans Mono",
-                "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New",
-                Courier, monospace;
-            border-radius: 4px;
-            color: rgb(30 32 37);
-            background: rgb(30 32 37 / 8%);
         }
     }
 </style>
