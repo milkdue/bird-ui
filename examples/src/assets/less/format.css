@@ -63,7 +63,8 @@ h5.snippet-title {
 .default-content {
     width: 100%;
 }
-code {
+p > code,
+td > code {
     margin: 0 1px;
     padding: 3px 6px;
     font-family: "IBM Plex Mono", Consolas, "Andale Mono WT", "Andale Mono",

@@ -2,12 +2,12 @@
  * @Author: 可以清心
  * @Description: markdown重写规则
  * @Date: 2024-02-02 16:43:28
- * @LastEditTime: 2024-02-02 17:43:19
+ * @LastEditTime: 2024-02-03 17:03:11
  */
 exports.markdownCustomTitle = function(markdown) {
     markdown.renderer.rules.heading_open = (tokens, index) => {
         const title = tokens[index + 1].content;
-        const level = tokens[index].tag.at(-1);
+        const level = tokens[index].tag.slice(-1);
 
         return `
             <h${level}
