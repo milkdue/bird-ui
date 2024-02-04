@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: anchor-list组件
  * @Date: 2024-02-04 11:13:45
- * @LastEditTime: 2024-02-04 11:51:53
+ * @LastEditTime: 2024-02-04 17:18:43
 -->
 <template>
     <ul :class="ulClass">
@@ -11,7 +11,9 @@
                 :href="item.href"
                 :class="linkClass(item)"
                 @click="handleClick(item, $event)"
-            ></a>
+            >
+                {{ item.title }}
+            </a>
             <anchor-list
                 v-if="item.children && item.children.length"
                 :active="active"
@@ -58,8 +60,9 @@ export default {
     },
     methods: {
         handleClick(item, e) {
+            this.$emit("update-active", item.href);
             window.history.pushState("", "", item.href);
-            e.preventDefault();
+            e?.preventDefault();
 
             const el = document.querySelector(item.href);
 
@@ -70,5 +73,3 @@ export default {
     }
 };
 </script>
-
-<style lang="less"></style>

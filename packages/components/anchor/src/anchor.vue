@@ -2,38 +2,38 @@
  * @Author: 可以清心
  * @Description: anchor 组件
  * @Date: 2024-02-04 11:13:52
- * @LastEditTime: 2024-02-04 12:44:10
+ * @LastEditTime: 2024-02-04 17:18:26
 -->
 <template>
-    <bird-scroll-bar v-if="scrollbar" v-bind="scrollbar">
+    <bird-scrollbar v-if="scrollbar">
         <div ref="anchor" :class="classList">
             <anchor-list
+                ref="list"
                 :active="active"
                 :options="options"
                 :root="true"
                 @update-active="active = $event"
-            >
-                <span
-                    v-if="showMarker && markerY !== undefined"
-                    class="bird-anchor-marker"
-                    :style="markerStyle"
-                ></span>
-            </anchor-list>
-        </div>
-    </bird-scroll-bar>
-    <div v-else ref="anchor" class="classList">
-        <anchor-list
-            :active="active"
-            :options="options"
-            :root="true"
-            @update-active="active = $event"
-        >
+            ></anchor-list>
             <span
                 v-if="showMarker && markerY !== undefined"
                 class="bird-anchor-marker"
                 :style="markerStyle"
             ></span>
-        </anchor-list>
+        </div>
+    </bird-scrollbar>
+    <div v-else ref="anchor" class="classList">
+        <anchor-list
+            ref="list"
+            :active="active"
+            :options="options"
+            :root="true"
+            @update-active="active = $event"
+        ></anchor-list>
+        <span
+            v-if="showMarker && markerY !== undefined"
+            class="bird-anchor-marker"
+            :style="markerStyle"
+        ></span>
     </div>
 </template>
 
@@ -52,8 +52,7 @@ export default {
             default: true
         },
         scrollEl: {
-            type: Object,
-            default: window
+            type: HTMLElement
         },
         offset: {
             type: Number,
@@ -111,14 +110,25 @@ export default {
         }
     },
     mounted() {
+        if (location.hash) {
+            const hash = decodeURIComponent(location.hash);
+            this.active = hash;
+            this.$refs.list.handleClick({ href: hash });
+        }
+
         let unwatch = this.$watch(
-            () => this.options,
-            async v => {
+            function() {
+                return this.options;
+            },
+            async function(v) {
                 if (v) {
                     await this.$nextTick();
-                    this.anchorList = this.treeToList(this.options);
+                    this.anchorList = this.treeToList(v);
                     unwatch();
                 }
+            },
+            {
+                immediate: true
             }
         );
 
@@ -135,7 +145,7 @@ export default {
         async handleMarkerPos() {
             const { showMarker, active } = this;
 
-            if (!showMarker || !active) return;
+            if (!active || !showMarker) return;
 
             await this.$nextTick();
 
@@ -162,27 +172,30 @@ export default {
         },
         getEl() {
             const { scrollEl } = this;
-            const scrollContainer = scrollEl?.();
+            const scrollContainer = scrollEl || window;
 
             if (!scrollContainer) return;
+
+            let anchorEls = [];
 
             if (scrollContainer instanceof Window) {
                 this.anchorList.forEach(a => {
                     const target = document.querySelector(a.href);
 
                     if (!target) return;
-                    this.anchorEls.push(target);
+                    anchorEls.push(target);
                 });
             } else {
                 this.anchorList.forEach(a => {
                     const target = scrollContainer.querySelector(a.href);
 
                     if (!target) return;
-                    this.anchorEls.push(target);
+                    anchorEls.push(target);
                 });
             }
 
-            this.scrollEl?.().addEventListener(
+            this.anchorEls = anchorEls;
+            scrollContainer.addEventListener(
                 "scroll",
                 this.debounceHandleScroll
             );
@@ -194,7 +207,7 @@ export default {
                 this.getEl();
             }
 
-            const scrollContainer = scrollEl?.();
+            const scrollContainer = scrollEl || window;
 
             if (!scrollContainer || anchorEls.length === 0) return;
             const distances = [];
@@ -253,5 +266,3 @@ export default {
     }
 };
 </script>
-
-<style></style>

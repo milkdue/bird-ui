@@ -2,10 +2,10 @@
  * @Author: 可以清心
  * @Description: Scrollbar 组件
  * @Date: 2024-01-23 17:03:22
- * @LastEditTime: 2024-01-31 18:32:11
+ * @LastEditTime: 2024-02-04 16:12:50
 -->
 <template>
-    <div ref="scrollbar" class="bird-scrollbar" :key="scrollKey">
+    <div ref="scrollbar" class="bird-scrollbar">
         <div ref="wrap" :class="wrapClass" @scroll="handleScroll">
             <div ref="content" class="bird-scrollbar__content">
                 <slot></slot>
@@ -72,8 +72,7 @@ export default {
             ratioX: 1,
             ratioY: 1,
             thumbWidth: "0",
-            thumbHeight: "0",
-            scrollKey: new Date().getTime()
+            thumbHeight: "0"
         };
     },
     mounted() {

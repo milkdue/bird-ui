@@ -1,4 +1,4 @@
-import Anchor from "./src";
+import Anchor from "./src/anchor.vue";
 import "../../styles/anchor/index.less";
 
 Anchor.install = function(Vue) {

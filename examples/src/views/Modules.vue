@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: 模版
  * @Date: 2024-01-16 11:08:28
- * @LastEditTime: 2024-01-31 16:12:30
+ * @LastEditTime: 2024-02-04 15:22:36
 -->
 <template>
     <div class="modules">
@@ -15,6 +15,7 @@
 
 <script>
 export default {
+    name: "BirdModule",
     computed: {
         navs() {
             return (
@@ -30,7 +31,7 @@ export default {
 <style lang="less">
     .modules {
         display: flex;
-        margin-top: @top-bar-height;
+        padding-top: @top-bar-height;
         .content {
             padding: 20px;
             width: calc(100% - @nav-bar-width);

@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: 自定义处理 .md 文件的loader
  * @Date: 2024-01-16 14:05:43
- * @LastEditTime: 2024-02-02 18:26:57
+ * @LastEditTime: 2024-02-04 14:34:09
  */
 const fs = require("fs");
 const MarkdownIt = require("markdown-it");
@@ -110,11 +110,27 @@ module.exports = function markdownLoader(markdownContent) {
         }
     }
 
+    // const template = `
+    //     <template>
+    //         <div>
+    //             ${markdownContent}
+    //         </div>
+    //     </template>
+    //     <script>
+    //         ${importScripts.join(";")}
+    //         export default {
+    //             components: {
+    //                 ${componentNames.join(",")}
+    //             }
+    //         }
+    //     </script>
+    // `;
+
     const template = `
         <template>
-            <div>
+            <bird-doc>
                 ${markdownContent}
-            </div>
+            </bird-doc>
         </template>
         <script>
             ${importScripts.join(";")}
