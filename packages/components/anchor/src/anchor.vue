@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: anchor 组件
  * @Date: 2024-02-04 11:13:52
- * @LastEditTime: 2024-02-04 17:18:26
+ * @LastEditTime: 2024-02-05 16:10:50
 -->
 <template>
     <bird-scrollbar v-if="scrollbar">
@@ -146,7 +146,7 @@ export default {
             const { showMarker, active } = this;
 
             if (!active || !showMarker) return;
-
+            window.history.pushState("", "", active);
             await this.$nextTick();
 
             const activeEl = this.$refs.anchor.querySelector(
