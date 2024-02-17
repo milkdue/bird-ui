@@ -1,3 +1,4 @@
+@import "../variable/index.less";
 *,
 *::before,
 *::after {
@@ -23,9 +24,11 @@ body {
         "Droid Sans",
         "Helvetica Neue",
         sans-serif;
-    // color: @font-color-l;
-    // background: @bg-color-l;
-    // transition: color @animats, background-color @animats;
+    color: @font-color-lg;
+    background: @background-light-color-1;
+    transition:
+        color @animats,
+        background-color @animats;
     line-height: 20px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

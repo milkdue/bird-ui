@@ -33,10 +33,10 @@
 @lg-width: 1920px;
 // xl 就是大于 1920 的屏幕
 
-@background-light-color-1: #fff;
-@background-light-color-2: color-mix(in srgb, #fff, @gray 3.6%);
-@background-light-color-3: color-mix(in srgb, #fff, @gray 6.8%);
-@background-light-color-4: color-mix(in srgb, #fff, @gray 9.4%);
+@background-light-color-1: @white;
+@background-light-color-2: mix(#1e2025, @white, 3.6%);
+@background-light-color-3: mix(#1e2025, @white, 6.8%);
+@background-light-color-4: mix(#1e2025, @white, 9.4%);
 
 @gray-1: rgba(30, 32, 37, 0.08);
 @gray-2: rgba(30, 32, 37, 0.12);
@@ -55,6 +55,11 @@
 @space-md: 12px;
 @space-lg: 16px;
 @space-xl: 24px;
+
+// line border color
+@line-color-xs: @gray-1;
+@line-color-md: @gray-3;
+@line-color-lg: @gray-4;
 
 // 字体
 @size-xs: 12px; // 小号
@@ -80,3 +85,6 @@
 @font-color-md: @gray-8;
 @font-color-sm: @gray-6;
 @font-color-xs: @gray-5;
+
+// 动画过渡
+@animats: 0.3s;
