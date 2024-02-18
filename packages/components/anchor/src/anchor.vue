@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: anchor 组件
  * @Date: 2024-02-04 11:13:52
- * @LastEditTime: 2024-02-05 16:10:50
+ * @LastEditTime: 2024-02-18 11:16:24
 -->
 <template>
     <bird-scrollbar v-if="scrollbar">
@@ -135,7 +135,7 @@ export default {
         this.getEl();
 
         this.$once("hook:beforeDestroy", () => {
-            this.scrollEl?.().removeEventListener(
+            this.scrollEl?.removeEventListener(
                 "scroll",
                 this.debounceHandleScroll
             );
