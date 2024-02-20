@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: 
  * @Date: 2024-02-18 10:50:29
- * @LastEditTime: 2024-02-18 23:31:19
+ * @LastEditTime: 2024-02-20 23:05:04
 -->
 ## 分割线
 
@@ -53,3 +53,17 @@
 将文字置于分割线中间，仅限于实线
 <divider-text></divider-text>
 :::
+
+### API
+
+| 参数     | 描述               | 类型                                    | 默认值 |
+| -------- | ----------------- | --------------------------------------- | ------ |
+|`type`|分割线的类型|`primary \| link \| success \| warn \| error`|`primary`|
+|`lineType`|线型|`solid \| dotted \| dashed \| double`|-|
+|`width`|线宽|`number`|-|
+|`fillWidth`|虚线中控制实线的宽度，仅在`lineType`为`dashed`时生效|`number`|-|
+|`dashWidth`|虚线中控制虚线的宽度，仅在`lineType`为`dashed`时生效|`number`|-|
+|`color`|分割线颜色|`string`|-|
+|`angle`|斜纹分割线的角度，仅在`lineType`为`dashed`时生效|`number`|-|
+|`fade`|是否两端虚化|`boolean`|-|
+|`content`|分割线文字，仅在`lineType`为`solid`时生效|`string`|-|
