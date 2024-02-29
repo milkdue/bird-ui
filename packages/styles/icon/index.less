@@ -1,0 +1,26 @@
+@import "../variable/index.less";
+
+.bird-svg-icon {
+    color: @gray-8;
+    transition: color @animats;
+    .svg-icon {
+        width: 24px;
+        height: 24px;
+        fill: currentcolor;
+        font-size: inherit;
+
+        &.svg-loading,
+        &.svg-loading1 {
+            animation: rotating 1.5s linear infinite;
+
+            @keyframes rotating {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(1turn);
+                }
+            }
+        }
+    }
+}

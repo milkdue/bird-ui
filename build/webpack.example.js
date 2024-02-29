@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description: webpack docs 配置文件
  * @Date: 2024-01-15 13:47:27
- * @LastEditTime: 2024-02-01 10:11:58
+ * @LastEditTime: 2024-02-28 22:52:42
  */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -59,7 +59,7 @@ const webpackBaseConfig = {
                 ]
             },
             {
-                test: /\.(png|jpe?g|gif|svg)$/,
+                test: /\.(png|jpe?g|gif)$/,
                 type: "asset",
                 parser: {
                     dataUrlCondition: {
@@ -109,6 +109,17 @@ const webpackBaseConfig = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.svg$/,
+                loader: "svg-sprite-loader",
+                include: [
+                    path.resolve(__dirname, "../packages/icons"),
+                    path.resolve(__dirname, "../examples/src/assets/svgs")
+                ],
+                options: {
+                    symbolId: "svg-[name]"
+                }
             }
         ]
     },

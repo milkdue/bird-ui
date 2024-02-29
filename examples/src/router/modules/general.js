@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-16 11:57:41
- * @LastEditTime: 2024-02-18 10:51:56
+ * @LastEditTime: 2024-02-28 23:14:02
  */
 const generalRoutes = [
     {
@@ -16,6 +16,10 @@ const generalRoutes = [
     {
         path: "color",
         component: () => import("@/demos/color/doc.md")
+    },
+    {
+        path: "icon",
+        component: () => import("@/demos/icon/doc.md")
     }
 ];
 

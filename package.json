@@ -55,6 +55,7 @@
     "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-less": "^3.0.1",
     "stylelint-order": "^6.0.4",
+    "svg-sprite-loader": "^6.0.11",
     "thread-loader": "^4.0.2",
     "vercel": "^33.4.1",
     "vue-eslint-parser": "^9.4.0",

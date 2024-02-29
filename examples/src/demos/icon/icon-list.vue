@@ -1,0 +1,78 @@
+<template>
+    <div class="icon-list">
+        <template v-for="(value, key) in iconList">
+            <h3 :id="title[key]" class="snippet-title">
+                {{ title[key] }}
+            </h3>
+            <div class="item-list">
+                <div class="icon-item" v-for="icon in value" :key="icon">
+                    <bird-svg-icon
+                        :name="icon"
+                        :width="28"
+                        :height="28"
+                        hover
+                    ></bird-svg-icon>
+                    <span class="name">{{ icon }}</span>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>
+
+<script>
+import IconList from "./icons";
+export default {
+    data() {
+        return {
+            iconList: IconList,
+            title: {
+                color: "多彩图标",
+                fill: "面性图标",
+                outline: "线性图标"
+            }
+        };
+    }
+};
+</script>
+
+<style lang="less" scoped>
+    .icon-list {
+        .snippet-title {
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+        }
+        .item-list {
+            display: flex;
+            flex-wrap: wrap;
+            .icon-item {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin: 0 -1px -1px 0;
+                padding: 16px;
+                width: 168px;
+                height: 148px;
+                font-size: 28px;
+                border: 1px solid rgb(30 32 37 / 8%);
+                transition: all 0.2s;
+                flex-direction: column;
+                cursor: pointer;
+                .name {
+                    font-size: 12px;
+                    &:hover {
+                        color: var(--primary-color-light);
+                    }
+                }
+                :deep(.bird-svg-icon) {
+                    transition: all 0.3s;
+                }
+                &:hover {
+                    :deep(.bird-svg-icon) {
+                        transform: scale(1.2);
+                    }
+                }
+            }
+        }
+    }
+</style>
