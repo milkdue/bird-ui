@@ -10,10 +10,11 @@ import Scrollbar from "./components/scrollbar";
 import Anchor from "./components/anchor";
 import Divider from "./components/divider";
 import Icon from "./components/icon";
+import Message from "./components/message";
 
 import "./index.less";
 
-const components = [Row, Col, Scrollbar, Anchor, Divider, Icon];
+const components = [Row, Col, Scrollbar, Anchor, Divider, Icon, Message];
 
 const install = function(Vue, opts = {}) {
     components.forEach(component => Vue.use(component));

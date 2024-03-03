@@ -11,6 +11,7 @@
                         :width="28"
                         :height="28"
                         hover
+                        @click.native="clickButton(icon)"
                     ></bird-svg-icon>
                     <span class="name">{{ icon }}</span>
                 </div>
@@ -20,7 +21,9 @@
 </template>
 
 <script>
+import { getHighlighter } from "shikiji";
 import IconList from "./icons";
+
 export default {
     data() {
         return {
@@ -29,8 +32,46 @@ export default {
                 color: "多彩图标",
                 fill: "面性图标",
                 outline: "线性图标"
-            }
+            },
+            shiki: null
         };
+    },
+    created() {
+        this.shiki = getHighlighter({
+            themes: ["vitesse-light", "vitesse-dark"],
+            langs: ["vue"]
+        });
+    },
+    methods: {
+        clickButton(icon) {
+            const { shiki } = this;
+            const text = `<bird-svg-icon name="${icon}"></bird-svg-icon>`;
+            const originCode = decodeURIComponent(text);
+            shiki.then(highlighter => {
+                let html = highlighter.codeToHtml(originCode, {
+                    lang: "vue",
+                    themes: {
+                        dark: "vitesse-dark",
+                        light: "vitesse-light"
+                    }
+                });
+                navigator.clipboard
+                    .writeText(text)
+                    .then(() => {
+                        this.$message({
+                            type: "success",
+                            html: true,
+                            message: `<div style="display: flex;"><span style="margin-right: 4px;">复制成功: </span>${html}</div>`
+                        });
+                    })
+                    .catch(error => {
+                        this.$message({
+                            type: "error",
+                            message: error.message
+                        });
+                    });
+            });
+        }
     }
 };
 </script>

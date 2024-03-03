@@ -1,0 +1,34 @@
+.bird-message {
+    position: fixed;
+    top: var(--space-lg);
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--background-light-color-4);
+    border-radius: var(--radius-md);
+    color: var(--gray);
+    background-color: var(--background-light-color-1);
+    transition:
+        opacity 0.3s,
+        transform 0.4s,
+        top 0.4s;
+    transform: translateX(-50%);
+
+    .message-icon {
+        margin-right: var(--space-sm);
+        &.bird-svg-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.bird-message-fade-enter,
+.bird-message-fade-leave-to {
+    opacity: 0;
+    transform: translate(-50%, -100%);
+}

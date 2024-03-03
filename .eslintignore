@@ -8,3 +8,4 @@ lib
 *.css
 src/assets/**/*
 docs
+packages/utils/popup-manager.js

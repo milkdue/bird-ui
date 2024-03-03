@@ -8,38 +8,22 @@
 
         <div class="snippet-space align-start flex-end" style="gap: 8px">
             <div class="icon" @click="onCopy">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1024 1024"
-                    class="svg-icon icon-copy-outline"
-                    stroke-width="0"
-                    stroke-linecap="butt"
-                    stroke-linejoin="arcs"
-                    style="fill: currentcolor; font-size: inherit"
-                >
-                    <path
-                        d="M896 51.2a25.6 25.6 0 0 1 25.6 25.6V768a25.6 25.6 0 0 1-25.6 25.6H742.4v153.6a25.6 25.6 0 0 1-25.6 25.6H128a25.6 25.6 0 0 1-25.6-25.6V256a25.6 25.6 0 0 1 25.6-25.6h153.6V76.8a25.6 25.6 0 0 1 25.6-25.6H896zm-230.4 256H179.2V896h486.4V307.2zM563.2 665.6v76.8H281.6v-76.8h281.6zM844.8 128H358.4v102.4h358.4a25.6 25.6 0 0 1 25.6 25.6v460.8h102.4V128zM563.2 460.8v76.8H281.6v-76.8h281.6z"
-                    ></path>
-                </svg>
+                <bird-svg-icon
+                    width="14px"
+                    height="14px"
+                    name="copy"
+                ></bird-svg-icon>
             </div>
             <div
                 class="icon"
                 :class="{ active: showCode }"
                 @click="showCode = !showCode"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1024 1024"
-                    class="svg-icon icon-code-outline"
-                    stroke-width="0"
-                    stroke-linecap="butt"
-                    stroke-linejoin="arcs"
-                    style="fill: currentcolor; font-size: inherit"
-                >
-                    <path
-                        d="M320 315.597 120.909 514.714 320 713.856l-54.298 54.298-253.44-253.44 253.44-253.415L320 315.597zm384 0 199.091 199.117L704 713.856l54.298 54.298 253.44-253.44-253.44-253.415L704 315.597zm-98.56-203.392 72.627 25.011-266.726 774.58-72.602-25.012z"
-                    ></path>
-                </svg>
+                <bird-svg-icon
+                    width="14px"
+                    height="14px"
+                    name="code"
+                ></bird-svg-icon>
             </div>
         </div>
 
@@ -91,7 +75,23 @@ export default {
         });
     },
     methods: {
-        onCopy() {}
+        onCopy() {
+            const text = decodeURIComponent(this.code);
+            navigator.clipboard
+                .writeText(text)
+                .then(() => {
+                    this.$message({
+                        type: "success",
+                        message: "复制成功"
+                    });
+                })
+                .catch(error => {
+                    this.$message({
+                        type: "error",
+                        message: error.message
+                    });
+                });
+        }
     }
 };
 </script>
@@ -124,17 +124,6 @@ export default {
                     background-color: color-mix(in srgb, #fff, #1e2025 3.6%);
                     transition: all 0.3s;
                     cursor: pointer;
-                    .svg-icon {
-                        display: inline-block;
-                        width: 1em;
-                        height: 1em;
-                        color: rgb(30 32 37 / 72%);
-                        outline: none;
-                        transition: all 0.3s;
-                        font-style: normal;
-                        vertical-align: -2px;
-                        stroke: currentcolor;
-                    }
                     &:hover {
                         background-color: color-mix(in srgb, #fff, @gray 6.8%);
                     }
