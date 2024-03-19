@@ -8,7 +8,11 @@
     <div class="color-assist">
         <div class="color-series" v-for="type in types">
             <div class="box" v-for="num in 10" :style="boxStyle(type, num)">
-                {{ `${type}-color-light-${num}` }}
+                {{
+                    type === "gray"
+                        ? `${type}-${num}`
+                        : `${type}-color-light-${num}`
+                }}
             </div>
         </div>
     </div>
@@ -18,14 +22,21 @@
 export default {
     data() {
         return {
-            types: ["link", "success", "warn", "error"]
+            types: ["link", "success", "warn", "error", "gray"]
         };
     },
     computed: {
         boxStyle() {
             return function(type, num) {
+                let backgroundColor;
+                if (type !== "gray") {
+                    backgroundColor = `var(--${type}-color-light-${num})`;
+                } else {
+                    backgroundColor = `var(--${type}-${num})`;
+                }
+
                 return {
-                    backgroundColor: `var(--${type}-color-light-${num})`,
+                    backgroundColor,
                     color: "white"
                 };
             };

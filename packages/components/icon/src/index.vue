@@ -89,7 +89,7 @@ export default {
         svgClass() {
             return [
                 "bird-svg-icon",
-                this.type ? "bird-svg-icon--" + this.type : "",
+                this.type ? "bird-svg-icon__" + this.type : "",
                 { "is-disabled": this.disabled }
             ];
         }

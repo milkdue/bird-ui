@@ -70,6 +70,15 @@ h5.snippet-title {
     margin-bottom: 0.5em;
     font-weight: 600;
     color: #1e2025;
+    transition: color var(--animats);
+    &:hover {
+        &::after {
+            margin-left: var(--space-sm);
+            font-size: 1em;
+            color: var(--primary-color-light-6);
+            content: "#";
+        }
+    }
 }
 
 .default-content {
