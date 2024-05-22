@@ -1,0 +1,21 @@
+.bird-button {
+    padding: 0 16px;
+    min-width: 36px;
+    height: 36px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #1e2025;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+}
+.bird-button.bird-button__primary {
+    color: #ffffff;
+    background-color: #2b5aed;
+}
+.bird-button.bird-button__primary:not(:disabled):hover {
+    background-color: var(--primary-color-light-2);
+}
+.bird-button.bird-button__primary:not(:disabled):active {
+    background-color: var(--primary-color-light-1);
+}

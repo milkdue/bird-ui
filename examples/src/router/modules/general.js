@@ -20,6 +20,14 @@ const generalRoutes = [
     {
         path: "icon",
         component: () => import("@/demos/icon/doc.md")
+    },
+    {
+        path: "button",
+        component: () => import("@/demos/button/doc.md")
+    },
+    {
+        path: "link",
+        component: () => import("@/demos/link/doc.md")
     }
 ];
 
