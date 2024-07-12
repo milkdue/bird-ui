@@ -1,0 +1,42 @@
+<template>
+    <div>
+        <div
+            v-for="type in types"
+            :key="type"
+            style="
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 10px;
+            "
+        >
+            <bird-button :type="type" disabled>默认形状</bird-button>
+            <bird-button :type="type" disabled shape="round">
+                全圆角
+            </bird-button>
+            <bird-button :type="type" disabled shape="circle">
+                <bird-svg-icon
+                    name="avatar"
+                    :width="14"
+                    :height="14"
+                ></bird-svg-icon>
+            </bird-button>
+            <bird-button :type="type" disabled shape="square">
+                <bird-svg-icon
+                    name="bell"
+                    :width="14"
+                    :height="14"
+                ></bird-svg-icon>
+            </bird-button>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            types: ["primary", "secondary", "plain"]
+        };
+    }
+};
+</script>

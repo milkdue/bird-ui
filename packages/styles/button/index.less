@@ -1,27 +1,142 @@
+@import "./variable.less";
 @import "../variable/index.less";
 
-@button-height: 36px;
+@status: primary, success, warning, danger;
+@types: primary, secondary, plain;
 
 .bird-button {
-    padding: 0 @space-lg;
-    min-width: @button-height;
-    height: @button-height;
-    border: 1px solid transparent;
-    border-radius: @radius-md;
-    color: @gray;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: @button-normal-padding;
+    font-size: inherit;
+    border-radius: @button-normal-border-radius;
+    white-space: nowrap;
+    color: @button-primary-color-text;
+    background-color: @button-primary-color-bg;
     outline: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: @button-primary-color-border;
     cursor: pointer;
-    // 控制用户是否可以选择文本
-    user-select: none;
 
-    &.bird-button__primary {
-        color: @white;
-        background-color: @primary-color-light;
-        &:not(:disabled):hover {
-            background-color: var(--primary-color-light-2);
+    &--loading {
+        opacity: 0.7 !important;
+        .loading-icon {
+            margin-right: @space-xs;
         }
-        &:not(:disabled):active {
-            background-color: var(--primary-color-light-1);
+
+        circle {
+            stroke: #fff !important;
         }
+    }
+
+    .btn-type(@type) {
+        .normal() {
+            color: ~"@{button-@{type}-color-text}";
+
+            circle {
+                stroke: ~"@{button-@{type}-color-text}" !important;
+            }
+
+            background-color: ~"@{button-@{type}-color-bg}";
+            border-color: ~"@{button-@{type}-color-border}";
+
+            &:not(:disabled):hover {
+                background-color: ~"@{button-@{type}-color-hover}";
+            }
+
+            &:not(:disabled):active {
+                background-color: ~"@{button-@{type}-color-active}";
+            }
+        }
+
+        &--@{type} {
+            .normal();
+        }
+    }
+
+    .btn-status(@type: primary, @status: primary) {
+        .normal() {
+            color: ~"@{button-@{type}-color-text--@{status}}";
+
+            circle {
+                stroke: ~"@{button-@{type}-color-text--@{status}}" !important;
+            }
+
+            background-color: ~"@{button-@{type}-color-bg--@{status}}";
+            border-color: ~"@{button-@{type}-color-border--@{status}}";
+
+            &:not(:disabled):hover {
+                background-color: ~"@{button-@{type}-color-hover--@{status}}";
+            }
+
+            &:not(:disabled):active {
+                background-color: ~"@{button-@{type}-color-active--@{status}}";
+            }
+        }
+
+        &.bird-button--@{type}.bird-button--@{status} {
+            .normal();
+        }
+    }
+
+    each(@types, {
+        .btn-type(@value);
+        each(@status, .(@state) {
+            .btn-status(@value, @state);
+        })
+    });
+
+    &--sm {
+        padding: 0 @space-sm;
+        min-width: @button-sm-min-width;
+        height: @button-sm-height;
+        font-size: @size-xs;
+        border-radius: @radius-sm;
+    }
+
+    &--md {
+        padding: 0 @space-lg;
+        min-width: @button-md-min-width;
+        height: @button-md-height;
+        border-radius: @radius-sm;
+    }
+
+    &--lg {
+        padding: 0 @space-lg;
+        min-width: @button-lg-min-width;
+        height: @button-lg-height;
+        border-radius: @radius-md;
+    }
+
+    &--xl {
+        padding: 0 @space-xl;
+        min-width: @button-xl-min-width;
+        height: @button-xl-height;
+        font-size: @size-md;
+        border-radius: @radius-md;
+    }
+
+    &--block {
+        display: block;
+        width: 100%;
+    }
+
+    &--round {
+        border-radius: @radius-rd;
+    }
+
+    &--circle {
+        padding: 0;
+        border-radius: @radius-rd;
+    }
+
+    &--square {
+        padding: 0;
+    }
+
+    &--disabled {
+        .disabled();
     }
 }
