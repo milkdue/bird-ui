@@ -28,6 +28,10 @@ const generalRoutes = [
     {
         path: "link",
         component: () => import("@/demos/link/doc.md")
+    },
+    {
+        path: "step",
+        component: () => import("@/demos/step/doc.md")
     }
 ];
 

@@ -30,6 +30,10 @@
             {
                 "name": "Link 链接",
                 "src": "link"
+            },
+            {
+                "name": "步骤条",
+                "src": "step"
             }
         ]
     }
