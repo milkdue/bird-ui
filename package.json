@@ -2,14 +2,15 @@
   "name": "bird-ui",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/main.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --config ./build/webpack.example.js",
     "prepare": "husky install",
     "clean": "rimraf node_modules",
     "changelog": "conventional-changelog -p custom-config -i CHANGELOG.md -s -r 0  -n ./changelog-option.js",
     "lint": "eslint src/**/* packages/**/* build/**/* examples/**/* --quiet --no-error-on-unmatched-pattern",
-    "build:dev": "rimraf docs && cross-env NODE_ENV=production npx webpack --config ./build/webpack.example.js"
+    "build:dev": "rimraf docs && cross-env NODE_ENV=production npx webpack --config ./build/webpack.example.js",
+    "build:prod": "rimraf lib && cross-env NODE_ENV=production npx webpack --config ./build/webpack.prod.js"
   },
   "author": "可以清心 (https://blog.keyiqingxin.cn/)",
   "license": "MIT",

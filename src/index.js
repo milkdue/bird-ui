@@ -6,6 +6,8 @@
  */
 console.info(1);
 
-if (window.fs === "1") {
-    console.log(1111);
-}
+export default {
+    install(Vue) {
+        console.info(2);
+    }
+};
