@@ -12,6 +12,7 @@
                 :active="active"
                 :options="options"
                 :root="true"
+                :pushState="pushState"
                 @update-active="active = $event"
             ></anchor-list>
             <span
@@ -21,12 +22,13 @@
             ></span>
         </div>
     </bird-scrollbar>
-    <div v-else ref="anchor" class="classList">
+    <div v-else ref="anchor" :class="classList">
         <anchor-list
             ref="list"
             :active="active"
             :options="options"
             :root="true"
+            :pushState="pushState"
             @update-active="active = $event"
         ></anchor-list>
         <span
@@ -69,6 +71,10 @@ export default {
         options: {
             type: Array,
             default: () => []
+        },
+        pushState: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -143,10 +149,12 @@ export default {
     },
     methods: {
         async handleMarkerPos() {
-            const { showMarker, active } = this;
+            const { showMarker, active, pushState } = this;
 
             if (!active || !showMarker) return;
-            window.history.pushState("", "", active);
+            if (pushState) {
+                window.history.pushState("", "", active);
+            }
             await this.$nextTick();
 
             const activeEl = this.$refs.anchor.querySelector(

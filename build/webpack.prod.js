@@ -99,7 +99,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "[name].[contenthash:10].css"
+            filename: "[name].css"
         }),
         new VueLoaderPlugin(),
         new DefinePlugin({

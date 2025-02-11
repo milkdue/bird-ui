@@ -33,7 +33,8 @@ export default {
             default: () => []
         },
         active: String,
-        root: Boolean
+        root: Boolean,
+        pushState: Boolean
     },
     computed: {
         ulClass() {
@@ -61,7 +62,9 @@ export default {
     methods: {
         handleClick(item, e) {
             this.$emit("update-active", item.href);
-            window.history.pushState("", "", item.href);
+            if (this.pushState) {
+                // window.history.pushState("", "", item.href);
+            }
             e?.preventDefault();
 
             const el = document.querySelector(item.href);
