@@ -20,9 +20,19 @@ import BirdUI from "../packages";
 import "./src/assets/less/theme-variable.less";
 import "normalize.css";
 
+// --- ag-grid
+import { AgGridVue } from "ag-grid-vue";
+import { ModuleRegistry } from "ag-grid-community";
+import { RowGroupingModule } from "ag-grid-enterprise";
+import "./src/assets/less/ag-grid.less";
+
+ModuleRegistry.registerModules([RowGroupingModule]);
+// --- ag-grid
+
 Vue.component("bird-snippet", Snippet);
 Vue.component("bird-nav-bar", NavBar);
 Vue.component("bird-doc", DocPage);
+Vue.component(AgGridVue.name, AgGridVue);
 
 Vue.use(BirdUI);
 

@@ -11,7 +11,7 @@ import Anchor from "./components/anchor";
 import Divider from "./components/divider";
 import Icon from "./components/icon";
 import Button from "./components/button";
-// import Message from "./components/message";
+import Message from "./components/message";
 import Link from "./components/link";
 
 import "./index.less";
@@ -23,7 +23,7 @@ const components = [
     Anchor,
     Divider,
     Icon,
-    // Message,
+    Message,
     Button,
     Link
 ];

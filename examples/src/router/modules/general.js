@@ -32,6 +32,14 @@ const generalRoutes = [
     {
         path: "step",
         component: () => import("@/demos/step/doc.md")
+    },
+    {
+        path: "column",
+        component: () => import("@/demos/grid/column/doc.md")
+    },
+    {
+        path: "row",
+        component: () => import("@/demos/grid/row/doc.md")
     }
 ];
 
