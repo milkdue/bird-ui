@@ -17,7 +17,7 @@
                 </bird-button>
             </div>
             <ag-grid-vue
-                style=" margin-bottom: 10px;width: 100%; height: 300px"
+                style="margin-bottom: 10px; width: 100%; height: 300px"
                 ref="topGrid"
                 class="ag-theme-alpine"
                 :columnDefs="colDefs"
@@ -52,7 +52,6 @@
                 :headerHeight="0"
                 :columnDefs="footerColumnDefs"
                 :rowData="bottomData"
-                :rowStyle="rowStyle"
             ></ag-grid-vue>
         </div>
         <div class="align-column-group">

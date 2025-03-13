@@ -47,6 +47,10 @@
             {
                 "name": "Row",
                 "src": "row"
+            },
+            {
+                "name": "Drag",
+                "src": "drag"
             }
         ]
     }
