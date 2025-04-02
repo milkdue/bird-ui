@@ -14,8 +14,9 @@
     }
 -->
 <template>
-    <div class="row-id-table">
+    <div v-exposure.once="exposureEvent" class="row-id-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 240px"
             class="ag-theme-quartz"
             :columnDefs="colDefs"
@@ -28,7 +29,9 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             rowData: [

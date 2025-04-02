@@ -2,16 +2,20 @@
 
 -->
 <template>
-    <ag-grid-vue
-        style="width: 100%; height: 500px"
-        class="ag-theme-quartz"
-        :columnDefs="colDefs"
-        :rowData="rowData"
-        @grid-ready="onGridReady"
-    ></ag-grid-vue>
+    <div v-exposure.once="exposureEvent">
+        <ag-grid-vue
+            v-if="showContent"
+            style="width: 100%; height: 500px"
+            class="ag-theme-quartz"
+            :columnDefs="colDefs"
+            :rowData="rowData"
+            @grid-ready="onGridReady"
+        ></ag-grid-vue>
+    </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const GroupComponent = {
     mounted() {
         console.log(this.params, "group-params");
@@ -62,6 +66,7 @@ const GroupComponent = {
     }
 };
 export default {
+    mixins: [CommonMixin],
     components: {
         GroupComponent
     },

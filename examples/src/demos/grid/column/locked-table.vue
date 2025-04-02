@@ -1,30 +1,34 @@
 <template>
-    <div class="move-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="move-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-quartz"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+                :suppressDragLeaveHidesColumns="true"
+                :autoSizeStrategy="autoSizeStrategy"
+                @grid-ready="onGridReady"
+                @column-pinned="onColumnPinned"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-quartz"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-            :suppressDragLeaveHidesColumns="true"
-            :autoSizeStrategy="autoSizeStrategy"
-            @grid-ready="onGridReady"
-            @column-pinned="onColumnPinned"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

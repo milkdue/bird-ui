@@ -4,79 +4,83 @@
     }
 -->
 <template>
-    <div class="align-grid-table">
-        <div class="align-grid">
-            <div class="button-group">
-                <bird-button
-                    v-for="button in buttons"
-                    size="md"
-                    :key="button.value"
-                    @click="clickButton(button.value)"
-                >
-                    {{ button.label }}
-                </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="align-grid-table">
+            <div class="align-grid">
+                <div class="button-group">
+                    <bird-button
+                        v-for="button in buttons"
+                        size="md"
+                        :key="button.value"
+                        @click="clickButton(button.value)"
+                    >
+                        {{ button.label }}
+                    </bird-button>
+                </div>
+                <ag-grid-vue
+                    style="margin-bottom: 10px; width: 100%; height: 300px"
+                    ref="topGrid"
+                    class="ag-theme-alpine"
+                    :columnDefs="colDefs"
+                    :rowData="rowData"
+                    :gridOptions="topOptions"
+                    @grid-ready="onGridReady($event)"
+                ></ag-grid-vue>
+                <ag-grid-vue
+                    ref="bottomGrid"
+                    style="width: 100%; height: 300px"
+                    class="ag-theme-alpine"
+                    :columnDefs="colDefs"
+                    :rowData="rowData"
+                    :gridOptions="bottomOptions"
+                ></ag-grid-vue>
             </div>
-            <ag-grid-vue
-                style="margin-bottom: 10px; width: 100%; height: 300px"
-                ref="topGrid"
-                class="ag-theme-alpine"
-                :columnDefs="colDefs"
-                :rowData="rowData"
-                :gridOptions="topOptions"
-                @grid-ready="onGridReady($event)"
-            ></ag-grid-vue>
-            <ag-grid-vue
-                ref="bottomGrid"
-                style="width: 100%; height: 300px"
-                class="ag-theme-alpine"
-                :columnDefs="colDefs"
-                :rowData="rowData"
-                :gridOptions="bottomOptions"
-            ></ag-grid-vue>
-        </div>
-        <div class="align-grid-as-footer">
-            <ag-grid-vue
-                style="width: 100%; height: 300px"
-                ref="footerTopGrid"
-                class="ag-theme-alpine"
-                :gridOptions="footerTopGridOptions"
-                :columnDefs="footerColumnDefs"
-                :rowData="rowData"
-                @grid-ready="footerGridReady"
-            ></ag-grid-vue>
-            <ag-grid-vue
-                style="width: 100%; height: 60px"
-                ref="footerBottomGrid"
-                class="ag-theme-alpine"
-                :gridOptions="footerBottomGridOptions"
-                :headerHeight="0"
-                :columnDefs="footerColumnDefs"
-                :rowData="bottomData"
-            ></ag-grid-vue>
-        </div>
-        <div class="align-column-group">
-            <ag-grid-vue
-                style="width: 100%; height: 300px"
-                class="ag-theme-alpine"
-                ref="groupTopGrid"
-                :gridOptions="groupTopGridOptions"
-                :columnDefs="groupColumnDefs"
-                :rowData="rowData"
-            ></ag-grid-vue>
-            <ag-grid-vue
-                style="width: 100%; height: 300px"
-                class="ag-theme-alpine"
-                ref="groupBottomGrid"
-                :gridOptions="groupBottomGridOptions"
-                :columnDefs="groupColumnDefs"
-                :rowData="rowData"
-            ></ag-grid-vue>
+            <div class="align-grid-as-footer">
+                <ag-grid-vue
+                    style="width: 100%; height: 300px"
+                    ref="footerTopGrid"
+                    class="ag-theme-alpine"
+                    :gridOptions="footerTopGridOptions"
+                    :columnDefs="footerColumnDefs"
+                    :rowData="rowData"
+                    @grid-ready="footerGridReady"
+                ></ag-grid-vue>
+                <ag-grid-vue
+                    style="width: 100%; height: 60px"
+                    ref="footerBottomGrid"
+                    class="ag-theme-alpine"
+                    :gridOptions="footerBottomGridOptions"
+                    :headerHeight="0"
+                    :columnDefs="footerColumnDefs"
+                    :rowData="bottomData"
+                ></ag-grid-vue>
+            </div>
+            <div class="align-column-group">
+                <ag-grid-vue
+                    style="width: 100%; height: 300px"
+                    class="ag-theme-alpine"
+                    ref="groupTopGrid"
+                    :gridOptions="groupTopGridOptions"
+                    :columnDefs="groupColumnDefs"
+                    :rowData="rowData"
+                ></ag-grid-vue>
+                <ag-grid-vue
+                    style="width: 100%; height: 300px"
+                    class="ag-theme-alpine"
+                    ref="groupBottomGrid"
+                    :gridOptions="groupBottomGridOptions"
+                    :columnDefs="groupColumnDefs"
+                    :rowData="rowData"
+                ></ag-grid-vue>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             buttons: [

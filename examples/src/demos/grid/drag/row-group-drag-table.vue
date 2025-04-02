@@ -5,8 +5,9 @@
 -->
 
 <template>
-    <div class="row-group-drag-table">
+    <div v-exposure.once="exposureEvent" class="row-group-drag-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-quartz"
             :columnDefs="colDefs"
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const data = [
     {
         athlete: "Aleksey Nemov",
@@ -393,6 +395,7 @@ const data = [
     }
 ];
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

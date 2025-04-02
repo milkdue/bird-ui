@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-16 11:57:41
- * @LastEditTime: 2025-03-04 14:48:19
+ * @LastEditTime: 2025-03-14 09:47:26
  */
 const generalRoutes = [
     {
@@ -44,6 +44,10 @@ const generalRoutes = [
     {
         path: "drag",
         component: () => import("@/demos/grid/drag/doc.md")
+    },
+    {
+        path: "cell",
+        component: () => import("@/demos/grid/cell/doc.md")
     }
 ];
 

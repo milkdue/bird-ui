@@ -1,41 +1,44 @@
 <template>
-    <div class="auto-size-grid-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="sizeToFit"
-            >
-                {{ button.label }}
-            </bird-button>
-        </div>
-        <div class="grid-wrapper">
-            <div class="fit-grid-width">
-                <ag-grid-vue
-                    style="width: 100%; height: 400px"
-                    class="ag-theme-alpine"
-                    :columnDefs="colDefs"
-                    :rowData="rowData"
-                    :autoSizeStrategy="autoSizeStrategy"
-                    @grid-ready="onGridReady"
-                ></ag-grid-vue>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="auto-size-grid-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="sizeToFit"
+                >
+                    {{ button.label }}
+                </bird-button>
             </div>
-            <div class="fit-cell-content">
-                <ag-grid-vue
-                    style="width: 100%; height: 400px"
-                    class="ag-theme-alpine"
-                    :columnDefs="colDefs"
-                    :rowData="rowData"
-                    :autoSizeStrategy="autoSizeStrategyD"
-                    @grid-ready="gridReady"
-                ></ag-grid-vue>
+            <div class="grid-wrapper">
+                <div class="fit-grid-width">
+                    <ag-grid-vue
+                        style="width: 100%; height: 400px"
+                        class="ag-theme-alpine"
+                        :columnDefs="colDefs"
+                        :rowData="rowData"
+                        :autoSizeStrategy="autoSizeStrategy"
+                        @grid-ready="onGridReady"
+                    ></ag-grid-vue>
+                </div>
+                <div class="fit-cell-content">
+                    <ag-grid-vue
+                        style="width: 100%; height: 400px"
+                        class="ag-theme-alpine"
+                        :columnDefs="colDefs"
+                        :rowData="rowData"
+                        :autoSizeStrategy="autoSizeStrategyD"
+                        @grid-ready="gridReady"
+                    ></ag-grid-vue>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const gridDefs = [
     {
         field: "athlete",
@@ -71,6 +74,7 @@ const gridDefs = [
 ];
 
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             rowData: null,

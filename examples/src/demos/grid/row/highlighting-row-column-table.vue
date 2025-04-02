@@ -8,8 +8,9 @@
     .ag-row-first .ag-row-last 分别对应首行和尾行
 -->
 <template>
-    <div class="highlighting-row-column-table">
+    <div v-exposure.once="exposureEvent" class="highlighting-row-column-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-alpine"
             columnHoverHighlight
@@ -20,7 +21,9 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

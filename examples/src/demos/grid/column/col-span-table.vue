@@ -1,6 +1,7 @@
 <template>
-    <div class="col-span-table">
+    <div v-exposure.once="exposureEvent" class="col-span-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-quartz"
             :columnDefs="colDefs"
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 function isHeaderRow(params) {
     return params.data.section === "big-title";
 }
@@ -27,6 +29,7 @@ const cellClassRules = {
     "quarters-cell": 'data.section === "quarters"'
 };
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             rowData: [

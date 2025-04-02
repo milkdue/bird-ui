@@ -20,8 +20,9 @@ rowSpan 规则
 5. 排序或过滤可能有特殊的行为
 -->
 <template>
-    <div class="row-span-table">
+    <div v-exposure.once="exposureEvent" class="row-span-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-alpine"
             :columnDefs="colDefs"
@@ -33,7 +34,9 @@ rowSpan 规则
     </div>
 </template>
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

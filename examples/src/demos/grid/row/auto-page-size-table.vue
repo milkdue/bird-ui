@@ -5,37 +5,41 @@
     当设置了 paginationAutoPageSize 不会展示选择分页数量的下拉框 并且会忽略 paginationPageSizeSelector 配置
 -->
 <template>
-    <div class="auto-page-size-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="auto-page-size-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                class="ag-theme-alpine"
+                :style="style"
+                :columnDefs="colDefs"
+                :autoGroupColumnDef="autoGroupColumnDef"
+                :defaultColDef="defaultColDef"
+                :suppressRowClickSelection="true"
+                :groupSelectsChildren="true"
+                :rowSelection="rowSelection"
+                :rowGroupPanelShow="rowGroupPanelShow"
+                :pagination="true"
+                :rowData="rowData"
+                :paginationAutoPageSize="true"
+                @grid-ready="onGridReady"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            class="ag-theme-alpine"
-            :style="style"
-            :columnDefs="colDefs"
-            :autoGroupColumnDef="autoGroupColumnDef"
-            :defaultColDef="defaultColDef"
-            :suppressRowClickSelection="true"
-            :groupSelectsChildren="true"
-            :rowSelection="rowSelection"
-            :rowGroupPanelShow="rowGroupPanelShow"
-            :pagination="true"
-            :rowData="rowData"
-            :paginationAutoPageSize="true"
-            @grid-ready="onGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

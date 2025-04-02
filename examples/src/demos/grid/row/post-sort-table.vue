@@ -7,8 +7,9 @@
     }
 -->
 <template>
-    <div class="post-sort-table">
+    <div v-exposure.once="exposureEvent" class="post-sort-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-alpine"
             :columnDefs="colDefs"
@@ -21,7 +22,9 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

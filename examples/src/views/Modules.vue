@@ -2,13 +2,15 @@
  * @Author: 可以清心
  * @Description: 模版
  * @Date: 2024-01-16 11:08:28
- * @LastEditTime: 2024-02-04 15:22:36
+ * @LastEditTime: 2025-03-13 18:51:47
 -->
 <template>
     <div class="modules">
         <bird-nav-bar :data="navs"></bird-nav-bar>
         <bird-scrollbar :key="$route.path" class="content">
-            <router-view></router-view>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </bird-scrollbar>
     </div>
 </template>

@@ -17,8 +17,9 @@
         - 冻结行不支持范围选中
 -->
 <template>
-    <div class="cell-component-table">
+    <div v-exposure.once="exposureEvent" class="cell-component-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-quartz"
             :columnDefs="colDefs"
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const CustomPinnedRowRenderer = {
     render(h) {
         return h(
@@ -45,6 +47,7 @@ const CustomPinnedRowRenderer = {
     }
 };
 export default {
+    mixins: [CommonMixin],
     components: {
         "custom-pinned-row-renderer": CustomPinnedRowRenderer
     },

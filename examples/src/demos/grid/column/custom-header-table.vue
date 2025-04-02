@@ -9,16 +9,20 @@
         - setSort 设置具体的排序
 -->
 <template>
-    <ag-grid-vue
-        style="width: 100%; height: 500px"
-        class="ag-theme-quartz"
-        :columnDefs="colDefs"
-        :rowData="rowData"
-        @grid-ready="onGridReady"
-    ></ag-grid-vue>
+    <div v-exposure.once="exposureEvent">
+        <ag-grid-vue
+            v-if="showContent"
+            style="width: 100%; height: 500px"
+            class="ag-theme-quartz"
+            :columnDefs="colDefs"
+            :rowData="rowData"
+            @grid-ready="onGridReady"
+        ></ag-grid-vue>
+    </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const HeaderComponent = {
     mounted() {
         console.log(this.params, "header-params");
@@ -39,6 +43,7 @@ const HeaderComponent = {
     }
 };
 export default {
+    mixins: [CommonMixin],
     components: {
         HeaderComponent
     },

@@ -1,4 +1,4 @@
-<!-- 
+<!--
     rowStyle: RowStyle
 
     interface RowStyle {
@@ -14,7 +14,6 @@
         api: GridApi<TData>;
         context: TContext;
     }
-
 
     rowClass: string | string[]
 
@@ -33,8 +32,6 @@
     interface RowClassRules<TData> {
         [cssClassName: string]: (((params: RowClassParams<TData>) => boolean) | string);
     }
-
-
 
     applyTransaction: 动态更新表格数据的一个核心 API 方法 允许你对表格中的数据进行增量修改（添加、删除、更新行），而不是重新加载整个数据集，从而高效更新 DOM 并保持当前用户的交互状态（如排序、过滤、滚动位置）
         - 添加新行（在指定位置插入数据）
@@ -65,252 +62,256 @@
 -->
 
 <template>
-    <div class="row-style-table">
-        <div class="label">rowStyle</div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-            :rowStyle="rowStyle"
-        ></ag-grid-vue>
-        <bird-divider line-type="dashed"></bird-divider>
-        <div class="label">getRowStyle</div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-            :getRowStyle="getRowStyle"
-        ></ag-grid-vue>
-        <bird-divider line-type="dashed"></bird-divider>
-        <div class="label">rowClass</div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
-            rowClass="bird-row-item"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-        ></ag-grid-vue>
-        <bird-divider line-type="dashed"></bird-divider>
-        <div class="label">getRowClass</div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
-            :getRowClass="getRowClass"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-        ></ag-grid-vue>
-        <bird-divider line-type="dashed"></bird-divider>
-        <div class="label">rowClassRules</div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
-            :rowClassRules="rowClassRules"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-        ></ag-grid-vue>
-        <bird-divider line-type="dashed"></bird-divider>
-        <div class="label">setData、setDataValue、applyTransaction</div>
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="row-style-table">
+            <div class="label">rowStyle</div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-alpine"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+                :rowStyle="rowStyle"
+            ></ag-grid-vue>
+            <bird-divider line-type="dashed"></bird-divider>
+            <div class="label">getRowStyle</div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-alpine"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+                :getRowStyle="getRowStyle"
+            ></ag-grid-vue>
+            <bird-divider line-type="dashed"></bird-divider>
+            <div class="label">rowClass</div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-alpine"
+                rowClass="bird-row-item"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+            ></ag-grid-vue>
+            <bird-divider line-type="dashed"></bird-divider>
+            <div class="label">getRowClass</div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-alpine"
+                :getRowClass="getRowClass"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+            ></ag-grid-vue>
+            <bird-divider line-type="dashed"></bird-divider>
+            <div class="label">rowClassRules</div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-alpine"
+                :rowClassRules="rowClassRules"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+            ></ag-grid-vue>
+            <bird-divider line-type="dashed"></bird-divider>
+            <div class="label">setData、setDataValue、applyTransaction</div>
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-alpine"
+                :columnDefs="specialColDefs"
+                :rowData="specialRowData"
+                :rowClassRules="specialRowClassRules"
+                :getRowId="getRowId"
+                @grid-ready="onSpecialGridReady"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-alpine"
-            :columnDefs="specialColDefs"
-            :rowData="specialRowData"
-            :rowClassRules="specialRowClassRules"
-            :getRowId="getRowId"
-            @grid-ready="onSpecialGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
-    const randomInt = () => {
-        return Math.floor(Math.random() * 10);
-    };
-    export default {
-        data() {
-            return {
-                colDefs: [
-                    {
-                        field: "athlete",
-                        headerName: "运动员"
-                    },
-                    {
-                        field: "age",
-                        width: 80,
-                        headerName: "年龄"
-                    },
-                    {
-                        field: "country",
-                        headerName: "国家"
-                    },
-                    {
-                        field: "date",
-                        headerName: "日期"
-                    },
-                    {
-                        field: "sport",
-                        headerName: "运动"
-                    },
-                    {
-                        field: "gold",
-                        headerName: "金牌",
-                        flex: 1
-                    }
-                ],
-                rowData: null,
-                rowStyle: {
-                    background: "#ffccbb"
+import CommonMixin from "../common.mixin";
+const randomInt = () => {
+    return Math.floor(Math.random() * 10);
+};
+export default {
+    mixins: [CommonMixin],
+    data() {
+        return {
+            colDefs: [
+                {
+                    field: "athlete",
+                    headerName: "运动员"
                 },
-                rowClassRules: {
-                    "age-0-20-green": params =>
-                        params.data && params.data.age < 20,
-                    "age-20-25-amber": params =>
-                        params.data &&
+                {
+                    field: "age",
+                    width: 80,
+                    headerName: "年龄"
+                },
+                {
+                    field: "country",
+                    headerName: "国家"
+                },
+                {
+                    field: "date",
+                    headerName: "日期"
+                },
+                {
+                    field: "sport",
+                    headerName: "运动"
+                },
+                {
+                    field: "gold",
+                    headerName: "金牌",
+                    flex: 1
+                }
+            ],
+            rowData: null,
+            rowStyle: {
+                background: "#ffccbb"
+            },
+            rowClassRules: {
+                "age-0-20-green": params =>
+                    params.data && params.data.age < 20,
+                "age-20-25-amber": params =>
+                    params.data &&
                         params.data.age >= 20 &&
                         params.data.age < 25,
-                    "age-25-red": params => params.data && params.data.age >= 25
+                "age-25-red": params => params.data && params.data.age >= 25
+            },
+            specialColDefs: [
+                {
+                    field: "employee",
+                    headerName: "员工"
                 },
-                specialColDefs: [
-                    {
-                        field: "employee",
-                        headerName: "员工"
-                    },
-                    {
-                        field: "sickDays",
-                        headerName: "病假天数",
-                        editable: true,
-                        flex: 1
-                    }
-                ],
-                specialGridApi: null,
-                specialRowClassRules: {
-                    "sick-days-warning": params =>
-                        params.data &&
+                {
+                    field: "sickDays",
+                    headerName: "病假天数",
+                    editable: true,
+                    flex: 1
+                }
+            ],
+            specialGridApi: null,
+            specialRowClassRules: {
+                "sick-days-warning": params =>
+                    params.data &&
                         params.data.sickDays > 5 &&
                         params.data.sickDays <= 7,
-                    "sick-days-breach": params =>
-                        params.data && params.data.sickDays >= 8
+                "sick-days-breach": params =>
+                    params.data && params.data.sickDays >= 8
+            },
+            getRowId: params => params.data.employee,
+            specialRowData: [
+                { employee: "Josh Finch", sickDays: 4 },
+                { employee: "Flavia Mccloskey", sickDays: 1 },
+                { employee: "Marine Creason", sickDays: 8 },
+                { employee: "Carey Livingstone", sickDays: 2 },
+                { employee: "Brande Giorgi", sickDays: 5 },
+                { employee: "Beatrice Kugler", sickDays: 3 },
+                { employee: "Elvia Macko", sickDays: 7 },
+                { employee: "Santiago Little", sickDays: 1 },
+                { employee: "Mary Clifton", sickDays: 2 },
+                { employee: "Norris Iniguez", sickDays: 1 },
+                { employee: "Shellie Umland", sickDays: 5 },
+                { employee: "Kristi Nawrocki", sickDays: 2 },
+                { employee: "Elliot Malo", sickDays: 3 },
+                { employee: "Paul Switzer", sickDays: 11 },
+                { employee: "Lilly Boaz", sickDays: 6 },
+                { employee: "Frank Kimura", sickDays: 1 },
+                { employee: "Alena Wages", sickDays: 5 }
+            ],
+            buttons: [
+                {
+                    label: "setData",
+                    value: "setData"
                 },
-                getRowId: params => params.data.employee,
-                specialRowData: [
-                    { employee: "Josh Finch", sickDays: 4 },
-                    { employee: "Flavia Mccloskey", sickDays: 1 },
-                    { employee: "Marine Creason", sickDays: 8 },
-                    { employee: "Carey Livingstone", sickDays: 2 },
-                    { employee: "Brande Giorgi", sickDays: 5 },
-                    { employee: "Beatrice Kugler", sickDays: 3 },
-                    { employee: "Elvia Macko", sickDays: 7 },
-                    { employee: "Santiago Little", sickDays: 1 },
-                    { employee: "Mary Clifton", sickDays: 2 },
-                    { employee: "Norris Iniguez", sickDays: 1 },
-                    { employee: "Shellie Umland", sickDays: 5 },
-                    { employee: "Kristi Nawrocki", sickDays: 2 },
-                    { employee: "Elliot Malo", sickDays: 3 },
-                    { employee: "Paul Switzer", sickDays: 11 },
-                    { employee: "Lilly Boaz", sickDays: 6 },
-                    { employee: "Frank Kimura", sickDays: 1 },
-                    { employee: "Alena Wages", sickDays: 5 }
-                ],
-                buttons: [
-                    {
-                        label: "setData",
-                        value: "setData"
-                    },
-                    {
-                        label: "setDataValue",
-                        value: "setDataValue"
-                    },
-                    {
-                        label: "applyTransaction",
-                        value: "applyTransaction"
-                    },
-                    {
-                        label: "删除第一行数据",
-                        value: "removeFirstRow"
-                    },
-                    {
-                        label: "添加一行数据到首行",
-                        value: "addFirstRow"
-                    }
-                ],
-                removeIndex: 0
-            };
+                {
+                    label: "setDataValue",
+                    value: "setDataValue"
+                },
+                {
+                    label: "applyTransaction",
+                    value: "applyTransaction"
+                },
+                {
+                    label: "删除第一行数据",
+                    value: "removeFirstRow"
+                },
+                {
+                    label: "添加一行数据到首行",
+                    value: "addFirstRow"
+                }
+            ],
+            removeIndex: 0
+        };
+    },
+    created() {
+        this.onGridReady({});
+    },
+    methods: {
+        onGridReady(params) {
+            this.gridApi = params.api;
+            fetch(
+                "https://www.ag-grid.com/example-assets/olympic-winners.json"
+            )
+                .then(resp => resp.json())
+                .then(data => (this.rowData = data));
         },
-        created() {
-            this.onGridReady({});
+        onSpecialGridReady(params) {
+            this.specialGridApi = params.api;
         },
-        methods: {
-            onGridReady(params) {
-                this.gridApi = params.api;
-                fetch(
-                    "https://www.ag-grid.com/example-assets/olympic-winners.json"
-                )
-                    .then(resp => resp.json())
-                    .then(data => (this.rowData = data));
-            },
-            onSpecialGridReady(params) {
-                this.specialGridApi = params.api;
-            },
-            getRowStyle(params) {
-                if (params.data && params.data.country === "United States") {
-                    return {
-                        background: "skyblue"
+        getRowStyle(params) {
+            if (params.data && params.data.country === "United States") {
+                return {
+                    background: "skyblue"
+                };
+            }
+        },
+        getRowClass(params) {
+            if (params.data && params.data.country === "United States") {
+                return "usa-row-item";
+            }
+        },
+        clickButton(code) {
+            if (code === "applyTransaction") {
+                let items = [];
+                this.specialGridApi.forEachNode(node => {
+                    let data = node.data;
+                    data.sickDays = randomInt();
+                    items.push(data);
+                });
+                this.specialGridApi[code]({
+                    update: items
+                });
+            } else if (code === "removeFirstRow") {
+                this.specialGridApi.applyTransaction({
+                    remove: [this.specialRowData[this.removeIndex++]]
+                });
+            } else if (code === "addFirstRow") {
+                this.specialGridApi.applyTransaction({
+                    add: [this.specialRowData[--this.removeIndex]],
+                    addIndex: 0
+                });
+            } else if (code === "setData") {
+                this.specialGridApi.forEachNode(node => {
+                    let data = {
+                        employee: node.data.employee,
+                        sickDays: randomInt()
                     };
-                }
-            },
-            getRowClass(params) {
-                if (params.data && params.data.country === "United States") {
-                    return "usa-row-item";
-                }
-            },
-            clickButton(code) {
-                if (code === "applyTransaction") {
-                    let items = [];
-                    this.specialGridApi.forEachNode(node => {
-                        let data = node.data;
-                        data.sickDays = randomInt();
-                        items.push(data);
-                    });
-                    this.specialGridApi[code]({
-                        update: items
-                    });
-                } else if (code === "removeFirstRow") {
-                    this.specialGridApi.applyTransaction({
-                        remove: [this.specialRowData[this.removeIndex++]]
-                    });
-                } else if (code === "addFirstRow") {
-                    this.specialGridApi.applyTransaction({
-                        add: [this.specialRowData[--this.removeIndex]],
-                        addIndex: 0
-                    });
-                } else if (code === "setData") {
-                    this.specialGridApi.forEachNode(node => {
-                        let data = {
-                            employee: node.data.employee,
-                            sickDays: randomInt()
-                        };
-                        node.setData(data);
-                    });
-                } else {
-                    this.specialGridApi.forEachNode(node => {
-                        node.setDataValue("sickDays", randomInt());
-                    });
-                }
+                    node.setData(data);
+                });
+            } else {
+                this.specialGridApi.forEachNode(node => {
+                    node.setDataValue("sickDays", randomInt());
+                });
             }
         }
-    };
+    }
+};
 </script>
 
 <style lang="less">

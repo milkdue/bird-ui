@@ -1,61 +1,64 @@
-<!--
-    pinnedTopRowData
-    pinnedBottomRowData
--->
 <template>
-    <div v-exposure.once="exposureEvent" class="row-pinning-table">
+    <div class="set-tooltip-table">
         <ag-grid-vue
-            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-quartz"
-            :columnDefs="columnDefs"
+            :columnDefs="colDefs"
             :defaultColDef="defaultColDef"
             :rowData="rowData"
-            :pinnedTopRowData="pinnedTopRowData"
-            :pinnedBottomRowData="pinnedBottomRowData"
             @grid-ready="onGridReady"
         ></ag-grid-vue>
     </div>
 </template>
-
 <script>
-import CommonMixin from "../common.mixin";
+const AthleteCellRenderer = {
+    render(h) {
+        const { params } = this;
+        return h(
+            "div",
+            {
+                ref: "wrapper",
+                style: {
+                    overflow: "hidden",
+                    "text-overflow": "ellipsis"
+                }
+            },
+            params.value
+        );
+    },
+    beforeMount() {
+        this.params.setTooltip(
+            `Dynamic Tooltip for ${this.params.value}`,
+            () =>
+                this.$refs.wrapper.scrollWidth >
+                    this.$refs.wrapper.clientWidth
+        );
+    }
+};
 export default {
-    mixins: [CommonMixin],
+    components: {
+        AthleteCellRenderer
+    },
     data() {
         return {
-            columnDefs: [
+            colDefs: [
                 {
                     field: "athlete",
+                    width: 120,
+                    cellRenderer: "AthleteCellRenderer",
                     headerName: "运动员"
                 },
                 {
                     field: "country",
+                    width: 150,
                     headerName: "国家"
-                },
-                {
-                    field: "sport",
-                    headerName: "运动"
                 }
             ],
             gridApi: null,
             defaultColDef: {
-                flex: 1
+                minWidth: 100,
+                filter: true
             },
-            pinnedBottomRowData: [
-                {
-                    athlete: "BOTTOM (athlete)",
-                    country: "BOTTOM (country)",
-                    sport: "BOTTOM (sport)"
-                }
-            ],
-            pinnedTopRowData: [
-                {
-                    athlete: "TOP (athlete)",
-                    country: "TOP (country)",
-                    sport: "TOP (sport)"
-                }
-            ],
             rowData: null
         };
     },
@@ -71,5 +74,3 @@ export default {
     }
 };
 </script>
-
-<style lang="less"></style>

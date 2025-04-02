@@ -1,27 +1,30 @@
 <template>
-    <div class="column-order-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="column-order-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-quartz"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+                :maintainColumnOrder="maintainColumnOrder"
+                @grid-ready="onGridReady"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-quartz"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-            :maintainColumnOrder="maintainColumnOrder"
-            @grid-ready="onGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const fields = [
     {
         field: "athlete",
@@ -49,6 +52,7 @@ const fields = [
     }
 ];
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: fields,

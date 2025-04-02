@@ -7,30 +7,33 @@
     pinned: left right 会打断分组
 -->
 <template>
-    <div class="column-header-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="column-header-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-quartz"
+                :headerHeight="headerHeight"
+                :groupHeaderHeight="groupHeaderHeight"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+                @grid-ready="onGridReady"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-quartz"
-            :headerHeight="headerHeight"
-            :groupHeaderHeight="groupHeaderHeight"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-            @grid-ready="onGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const colDefs = [
     {
         headerName: "详细信息",
@@ -96,6 +99,7 @@ const colDefs = [
     }
 ];
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs,

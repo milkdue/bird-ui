@@ -3,37 +3,41 @@
         this.gridApi.getColumnDefs()
 -->
 <template>
-    <div class="column-event-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="column-event-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-quartz"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+                @grid-ready="onGridReady"
+                @sort-changed="sortEvent"
+                @column-resized="resizeEvent"
+                @column-visible="visibleEvent"
+                @column-pivot-changed="pivotEvent"
+                @column-row-group-changed="rowGroupEvent"
+                @column-value-changed="valueEvent"
+                @column-moved="moveEvent"
+                @column-pinned-changed="pinnedEvent"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-quartz"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-            @grid-ready="onGridReady"
-            @sort-changed="sortEvent"
-            @column-resized="resizeEvent"
-            @column-visible="visibleEvent"
-            @column-pivot-changed="pivotEvent"
-            @column-row-group-changed="rowGroupEvent"
-            @column-value-changed="valueEvent"
-            @column-moved="moveEvent"
-            @column-pinned-changed="pinnedEvent"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             // defaultColDef: {

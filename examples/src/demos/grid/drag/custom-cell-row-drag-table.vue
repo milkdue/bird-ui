@@ -1,4 +1,4 @@
-<!-- 
+<!--
     在自定义单元格中使用拖拽功能
         在自定义单元格中注册对应拖拽的 icon 即可在移动到单元格时显示 icon
         注册函数 `registerRowDragger(Ref)`
@@ -7,8 +7,9 @@
 -->
 
 <template>
-    <div class="custom-cell-row-drag-table">
+    <div v-exposure.once="exposureEvent" class="custom-cell-row-drag-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-quartz"
             rowDragManaged
@@ -21,115 +22,117 @@
 </template>
 
 <script>
-    const CustomCellRenderer = {
-        data() {
-            return {
-                athlete: "",
-                country: "",
-                year: ""
-            };
-        },
-        beforeMount() {
-            this.athlete = this.params.data.athlete;
-            this.country = this.params.data.country;
-            this.year = this.params.data.year;
-        },
-        mounted() {
-            this.params.registerRowDragger(this.$refs.dragger.$el);
-        },
-        render(h) {
-            const { athlete, country, year } = this;
-            return h(
-                "div",
-                {
-                    class: "custom-cell-row-drag-renderer"
-                },
-                [
-                    h(
-                        "div",
-                        {
-                            class: "athlete-info"
-                        },
-                        [h("span", {}, athlete), h("span", {}, country)]
-                    ),
-                    h("span", {}, year),
-                    h("bird-svg-icon", {
-                        ref: "dragger",
-                        props: {
-                            name: "move1",
-                            width: 14,
-                            height: 14
-                        }
-                    })
-                ]
-            );
-        }
-    };
-    export default {
-        components: {
-            CustomCellRenderer: CustomCellRenderer
-        },
-        data() {
-            return {
-                colDefs: [
+import CommonMixin from "../common.mixin";
+const CustomCellRenderer = {
+    data() {
+        return {
+            athlete: "",
+            country: "",
+            year: ""
+        };
+    },
+    beforeMount() {
+        this.athlete = this.params.data.athlete;
+        this.country = this.params.data.country;
+        this.year = this.params.data.year;
+    },
+    mounted() {
+        this.params.registerRowDragger(this.$refs.dragger.$el);
+    },
+    render(h) {
+        const { athlete, country, year } = this;
+        return h(
+            "div",
+            {
+                class: "custom-cell-row-drag-renderer"
+            },
+            [
+                h(
+                    "div",
                     {
-                        field: "athlete",
-                        headerName: "运动员",
-                        cellClass: "custom-athlete-cell",
-                        cellRenderer: "CustomCellRenderer"
-                        // rowDrag: true
+                        class: "athlete-info"
                     },
-                    {
-                        field: "country",
-                        headerName: "国家"
-                    },
-                    {
-                        field: "year",
-                        headerName: "年份",
-                        width: 100
-                    },
-                    {
-                        field: "date",
-                        headerName: "日期"
-                    },
-                    {
-                        field: "sport",
-                        headerName: "运动"
-                    },
-                    {
-                        field: "gold",
-                        headerName: "金牌"
-                    },
-                    {
-                        field: "silver",
-                        headerName: "银牌"
-                    },
-                    {
-                        field: "bronze",
-                        headerName: "铜牌"
+                    [h("span", {}, athlete), h("span", {}, country)]
+                ),
+                h("span", {}, year),
+                h("bird-svg-icon", {
+                    ref: "dragger",
+                    props: {
+                        name: "move1",
+                        width: 14,
+                        height: 14
                     }
-                ],
-                gridApi: null,
-                defaultColDef: {
-                    width: 170,
-                    filter: true
+                })
+            ]
+        );
+    }
+};
+export default {
+    mixins: [CommonMixin],
+    components: {
+        CustomCellRenderer: CustomCellRenderer
+    },
+    data() {
+        return {
+            colDefs: [
+                {
+                    field: "athlete",
+                    headerName: "运动员",
+                    cellClass: "custom-athlete-cell",
+                    cellRenderer: "CustomCellRenderer"
+                    // rowDrag: true
                 },
-                rowData: null
-            };
-        },
-        methods: {
-            onGridReady(params) {
-                this.gridApi = params.api;
-                fetch(
-                    "https://www.ag-grid.com/example-assets/olympic-winners.json"
-                )
-                    .then(resp => resp.json())
-                    .then(data => {
-                        this.rowData = data;
-                    });
-            }
+                {
+                    field: "country",
+                    headerName: "国家"
+                },
+                {
+                    field: "year",
+                    headerName: "年份",
+                    width: 100
+                },
+                {
+                    field: "date",
+                    headerName: "日期"
+                },
+                {
+                    field: "sport",
+                    headerName: "运动"
+                },
+                {
+                    field: "gold",
+                    headerName: "金牌"
+                },
+                {
+                    field: "silver",
+                    headerName: "银牌"
+                },
+                {
+                    field: "bronze",
+                    headerName: "铜牌"
+                }
+            ],
+            gridApi: null,
+            defaultColDef: {
+                width: 170,
+                filter: true
+            },
+            rowData: null
+        };
+    },
+    methods: {
+        onGridReady(params) {
+            this.gridApi = params.api;
+            fetch(
+                "https://www.ag-grid.com/example-assets/olympic-winners.json"
+            )
+                .then(resp => resp.json())
+                .then(data => {
+                    this.rowData = data;
+                });
         }
-    };
+    }
+};
 </script>
 
 <style lang="less">

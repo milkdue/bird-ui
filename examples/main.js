@@ -2,10 +2,11 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-12 18:52:22
- * @LastEditTime: 2025-03-05 11:22:59
+ * @LastEditTime: 2025-03-13 16:18:50
  */
 import Vue from "vue";
 import App from "./App";
+import directives from "./src/directives";
 import router from "./src/router";
 import Snippet from "./src/components/Snippet.vue";
 import NavBar from "./src/components/Navbar.vue";
@@ -59,6 +60,7 @@ Vue.component("bird-doc", DocPage);
 Vue.component(AgGridVue.name, AgGridVue);
 
 Vue.use(BirdUI);
+Vue.use(directives);
 
 new Vue({
     router,

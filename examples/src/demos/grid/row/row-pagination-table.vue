@@ -7,8 +7,9 @@
 -->
 
 <template>
-    <div class="row-pagination-table">
+    <div v-exposure.once="exposureEvent" class="row-pagination-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-alpine"
             :columnDefs="colDefs"
@@ -30,7 +31,9 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

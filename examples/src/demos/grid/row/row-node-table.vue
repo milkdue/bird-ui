@@ -12,31 +12,35 @@
     gridApi.getRowNode(id: string) => RowNode | undefined;
 -->
 <template>
-    <div class="row-node-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="row-node-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 240px"
+                class="ag-theme-quartz"
+                :columnDefs="colDefs"
+                :rowData="rowData"
+                :defaultColDef="defaultColDef"
+                :getRowId="getRowId"
+                @grid-ready="onGridReady"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 240px"
-            class="ag-theme-quartz"
-            :columnDefs="colDefs"
-            :rowData="rowData"
-            :defaultColDef="defaultColDef"
-            :getRowId="getRowId"
-            @grid-ready="onGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             rowData: [

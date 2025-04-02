@@ -56,44 +56,48 @@
 -->
 
 <template>
-    <div class="custom-pagination-control-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                :disabled="buttonMap[button.value]"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="custom-pagination-control-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    :disabled="buttonMap[button.value]"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <div class="info-content">
+                <span>当前页: {{ currentPage }}</span>
+                <span>总页数: {{ totalPage }}</span>
+                <span>每页数量: {{ paginationPageSize }}</span>
+                <span>总数量: {{ total }}</span>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-quartz"
+                :columnDefs="colDefs"
+                :defaultColDef="defaultColDef"
+                :rowSelection="rowSelection"
+                :paginationPageSize="paginationPageSize"
+                :paginationPageSizeSelector="paginationPageSizeSelector"
+                :pagination="true"
+                :suppressPaginationPanel="true"
+                :suppressScrollOnNewData="true"
+                :rowData="rowData"
+                @paginationChanged="onPaginationChanged"
+                @gridReady="onGridReady"
+            ></ag-grid-vue>
         </div>
-        <div class="info-content">
-            <span>当前页: {{ currentPage }}</span>
-            <span>总页数: {{ totalPage }}</span>
-            <span>每页数量: {{ paginationPageSize }}</span>
-            <span>总数量: {{ total }}</span>
-        </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-quartz"
-            :columnDefs="colDefs"
-            :defaultColDef="defaultColDef"
-            :rowSelection="rowSelection"
-            :paginationPageSize="paginationPageSize"
-            :paginationPageSizeSelector="paginationPageSizeSelector"
-            :pagination="true"
-            :suppressPaginationPanel="true"
-            :suppressScrollOnNewData="true"
-            :rowData="rowData"
-            @paginationChanged="onPaginationChanged"
-            @gridReady="onGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

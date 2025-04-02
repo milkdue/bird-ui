@@ -7,8 +7,9 @@
 -->
 
 <template>
-    <div class="simple-unmanaged-table">
+    <div v-exposure.once="exposureEvent" class="simple-unmanaged-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-quartz"
             :columnDefs="colDefs"
@@ -23,6 +24,7 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const getData = () => {
     const data = [
         {
@@ -507,6 +509,7 @@ const moveInArray = (array, from, to) => {
 };
 
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

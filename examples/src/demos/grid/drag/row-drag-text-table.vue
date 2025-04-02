@@ -25,32 +25,36 @@
 -->
 
 <template>
-    <div class="row-drag-text-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="row-drag-text-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-quartz"
+                rowDragManaged
+                :columnDefs="colDefs"
+                :rowDragText="rowDragText"
+                :defaultColDef="defaultColDef"
+                :rowData="rowData"
+                @grid-ready="onGridReady"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-quartz"
-            rowDragManaged
-            :columnDefs="colDefs"
-            :rowDragText="rowDragText"
-            :defaultColDef="defaultColDef"
-            :rowData="rowData"
-            @grid-ready="onGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

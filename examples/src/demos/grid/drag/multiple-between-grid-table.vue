@@ -3,47 +3,50 @@
 -->
 
 <template>
-    <div class="multiple-between-grid-table">
-        <div class="button-group">
-            <bird-button
-                v-for="button in buttons"
-                size="md"
-                :key="button.value"
-                :type="computedType(button.value)"
-                @click="clickButton(button.value)"
-            >
-                {{ button.label }}
-            </bird-button>
-        </div>
-        <div class="grid-content">
-            <ag-grid-vue
-                style="width: 100%; height: 500px"
-                class="ag-theme-quartz left-grid"
-                rowSelection="multiple"
-                rowDragMultiRow
-                rowDragManaged
-                suppressMoveWhenRowDragging
-                :defaultColDef="defaultColDef"
-                :columnDefs="leftColDefs"
-                :getRowId="getRowId"
-                :rowData="leftRowData"
-                @grid-ready="onGridReady($event, 'left')"
-            ></ag-grid-vue>
-            <ag-grid-vue
-                style="width: 100%; height: 500px"
-                class="ag-theme-quartz right-grid"
-                rowDragManaged
-                :defaultColDef="defaultColDef"
-                :getRowId="getRowId"
-                :rowData="rightRowData"
-                :columnDefs="rightColDefs"
-                @grid-ready="onGridReady($event, 'right')"
-            ></ag-grid-vue>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="multiple-between-grid-table">
+            <div class="button-group">
+                <bird-button
+                    v-for="button in buttons"
+                    size="md"
+                    :key="button.value"
+                    :type="computedType(button.value)"
+                    @click="clickButton(button.value)"
+                >
+                    {{ button.label }}
+                </bird-button>
+            </div>
+            <div class="grid-content">
+                <ag-grid-vue
+                    style="width: 100%; height: 500px"
+                    class="ag-theme-quartz left-grid"
+                    rowSelection="multiple"
+                    rowDragMultiRow
+                    rowDragManaged
+                    suppressMoveWhenRowDragging
+                    :defaultColDef="defaultColDef"
+                    :columnDefs="leftColDefs"
+                    :getRowId="getRowId"
+                    :rowData="leftRowData"
+                    @grid-ready="onGridReady($event, 'left')"
+                ></ag-grid-vue>
+                <ag-grid-vue
+                    style="width: 100%; height: 500px"
+                    class="ag-theme-quartz right-grid"
+                    rowDragManaged
+                    :defaultColDef="defaultColDef"
+                    :getRowId="getRowId"
+                    :rowData="rightRowData"
+                    :columnDefs="rightColDefs"
+                    @grid-ready="onGridReady($event, 'right')"
+                ></ag-grid-vue>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 const SportRenderer = {
     render(h) {
         const { applyTransaction } = this;
@@ -81,6 +84,7 @@ const SportRenderer = {
     }
 };
 export default {
+    mixins: [CommonMixin],
     components: {
         SportRenderer
     },

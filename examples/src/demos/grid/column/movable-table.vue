@@ -1,29 +1,33 @@
 <template>
-    <div class="movable-table">
-        <div class="legend-bar">
-            <div class="legend-item locked-column-item">
-                <span class="legend-color"></span>
-                <span class="legend-label">锁定列</span>
+    <div v-exposure.once="exposureEvent">
+        <div v-if="showContent" class="movable-table">
+            <div class="legend-bar">
+                <div class="legend-item locked-column-item">
+                    <span class="legend-color"></span>
+                    <span class="legend-label">锁定列</span>
+                </div>
+                <div class="legend-item movable-column-item">
+                    <span class="legend-color"></span>
+                    <span class="legend-label">不可移动列</span>
+                </div>
             </div>
-            <div class="legend-item movable-column-item">
-                <span class="legend-color"></span>
-                <span class="legend-label">不可移动列</span>
-            </div>
+            <ag-grid-vue
+                style="width: 100%; height: 500px"
+                class="ag-theme-quartz"
+                :columnDefs="colDefs"
+                :defaultColDef="defaultColDef"
+                :suppressDragLeaveHidesColumns="true"
+                :rowData="rowData"
+                @grid-ready="onGridReady"
+            ></ag-grid-vue>
         </div>
-        <ag-grid-vue
-            style="width: 100%; height: 500px"
-            class="ag-theme-quartz"
-            :columnDefs="colDefs"
-            :defaultColDef="defaultColDef"
-            :suppressDragLeaveHidesColumns="true"
-            :rowData="rowData"
-            @grid-ready="onGridReady"
-        ></ag-grid-vue>
     </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             colDefs: [

@@ -10,19 +10,24 @@
     columnTypes: 预设配置，使用相应的 type 进行统一列配置  type: keyof ColumnTypes | (keyof ColumnTypes)[]
 -->
 <template>
-    <ag-grid-vue
-        style="width: 100%; height: 200px"
-        class="ag-theme-alpine"
-        rowSelection="multiple"
-        :columnDefs="colDefs"
-        :rowData="rowData"
-        :defaultColDef="defaultColDef"
-        :columnTypes="columnTypes"
-    ></ag-grid-vue>
+    <div v-exposure.once="exposureEvent">
+        <ag-grid-vue
+            v-if="showContent"
+            style="width: 100%; height: 200px"
+            class="ag-theme-alpine"
+            rowSelection="multiple"
+            :columnDefs="colDefs"
+            :rowData="rowData"
+            :defaultColDef="defaultColDef"
+            :columnTypes="columnTypes"
+        ></ag-grid-vue>
+    </div>
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             rowData: [

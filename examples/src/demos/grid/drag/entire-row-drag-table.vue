@@ -9,8 +9,9 @@
 -->
 
 <template>
-    <div class="entire-row-drag-table">
+    <div v-exposure.once="exposureEvent" class="entire-row-drag-table">
         <ag-grid-vue
+            v-if="showContent"
             style="width: 100%; height: 500px"
             class="ag-theme-quartz"
             rowDragEntireRow
@@ -25,7 +26,9 @@
 </template>
 
 <script>
+import CommonMixin from "../common.mixin";
 export default {
+    mixins: [CommonMixin],
     data() {
         return {
             columnDefs: [
