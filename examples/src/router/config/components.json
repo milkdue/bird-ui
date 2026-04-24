@@ -55,6 +55,14 @@
             {
                 "name": "Cell",
                 "src": "cell"
+            },
+            {
+                "name": "Filter",
+                "src": "filter"
+            },
+            {
+                "name": "Master",
+                "src": "master"
             }
         ]
     }

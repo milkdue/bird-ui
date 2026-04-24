@@ -81,6 +81,7 @@
     ]
   },
   "dependencies": {
+    "@ag-grid-community/locale": "^33.2.1",
     "ag-grid-community": "^31.3.4",
     "ag-grid-enterprise": "^31.3.4",
     "ag-grid-vue": "^31.3.4",

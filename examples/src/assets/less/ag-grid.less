@@ -1,3 +1,8 @@
 @import "~ag-grid-community/styles/ag-grid.css";
 @import "~ag-grid-community/styles/ag-theme-alpine.css";
 @import "~ag-grid-community/styles/ag-theme-quartz.css";
+
+// 修正ag-grid的样式问题 导致的 tooltip 以及 filter 无法显示的问题
+.ag-popup {
+    position: static !important;
+}

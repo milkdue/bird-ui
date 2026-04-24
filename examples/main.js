@@ -2,7 +2,7 @@
  * @Author: 可以清心
  * @Description:
  * @Date: 2024-01-12 18:52:22
- * @LastEditTime: 2025-03-13 16:18:50
+ * @LastEditTime: 2026-04-18 14:00:30
  */
 import Vue from "vue";
 import App from "./App";
@@ -35,8 +35,11 @@ import {
     AdvancedFilterModule,
     MultiFilterModule,
     SetFilterModule,
-    LicenseManager
+    LicenseManager,
+    MasterDetailModule
 } from "ag-grid-enterprise";
+import { AG_GRID_LOCALE_CN } from "@ag-grid-community/locale";
+import UserDetailRenderer from "./user-detail-renderer.vue";
 import "./src/assets/less/ag-grid.less";
 
 ModuleRegistry.registerModules([
@@ -47,17 +50,23 @@ ModuleRegistry.registerModules([
     FiltersToolPanelModule,
     AdvancedFilterModule,
     MultiFilterModule,
-    SetFilterModule
+    SetFilterModule,
+    MasterDetailModule
 ]);
 LicenseManager.setLicenseKey(
     "[v3][Release][0102]_MTcxNTc3NTcyODYxNg==cac543f10d0ab5a19b5f0ac12982a817"
 );
+AgGridVue.options.props.localeText = {
+    type: Object,
+    default: () => AG_GRID_LOCALE_CN
+};
 // --- ag-grid
 
 Vue.component("bird-snippet", Snippet);
 Vue.component("bird-nav-bar", NavBar);
 Vue.component("bird-doc", DocPage);
 Vue.component(AgGridVue.name, AgGridVue);
+Vue.component("UserDetailRenderer", UserDetailRenderer);
 
 Vue.use(BirdUI);
 Vue.use(directives);
